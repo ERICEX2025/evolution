@@ -1,6 +1,7 @@
-package evolution;
+package evolution.Arcade;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -16,6 +17,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        Arcade organizer = new Arcade(stage);
+        Scene scene = new Scene(organizer.getRoot());
+        stage.setScene(scene);
+        stage.setTitle("Arcade");
+        stage.show();
         // Create top-level object, set up the scene, and show the stage here.
     }
 

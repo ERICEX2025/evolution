@@ -1,0 +1,79 @@
+Doodle Jump README
+
+Overview:
+
+        Our project consists of 9 classes: App, PaneOrganizer, Game, Doodle, Platform, Black, Blue, Green and Red. App is
+        responsible for setting the stage and scene and instantiating the PaneOrganizer. PaneOrganizer is the top-level
+        graphical class. It is responsible for organizing the various graphical elements. It does so through the use
+        of a Border Pane root. Importantly, it also instantiates the top-level logic class: Game. The Game class is
+        responsible for managing the timeline. Within the timeline, numerous methods are called on a continuous basis.
+        These methods are responsible for:
+
+                        - generating random new platforms
+                        - removing platforms when they go off of the screen
+                        - animating the motion of the doodle
+                        - checking for collisions between the doodle and the platforms
+                        - checking to see if the doodle falls off screen (ends game)
+                        - checking to see if any of the generated platforms are blue (initiates motion)
+                        - scrolling down (moving all platforms down when the doodle goes above the midpoint)
+
+        The doodle class creates the doodle character in the game. It also has methods that handle its motion. It has
+        getters and setters that retrieve information needed in the Game class. It also has a key handler that manages
+        its motion with key input (LEFT = move left, RIGHT = move right).
+
+
+        Platform is a class that defines the methods needed by all types of platforms. This includes being created getting
+        its x and y positions, getting its bounds, moving down, getting its color, and setting a drop shadow. Black,
+        Blue, Green and Red are all subclasses of Platform. They all override the getColor method in order to return
+        their specific color. Blue is unique in that in overrides the move method in order to account for its unique
+        back and forth motion.
+
+
+Design Choices:
+
+        Perhaps the most significant design decision in this project was the decision between using inheritance vs.
+        an interface for the platforms. We decided that it would be best to use inheritance. Our reasoning for this
+        was simple: the platforms are more similar than they are different. All platforms use the same methods with the
+        exception of the getColor and move methods, which are overridden. The getColor method is overridden because it
+        is necessary that each platform returns its unique color. This is because we made the design decision to
+        determine the effects of a collision by checking the color of the platform collided with. The move method is,
+        perhaps, the area in which the strongest criticism could be leveled against the design this program; it does
+        not actually do anything in the Platform class and it is overridden in Blue to account for Blue's unique
+        back-and-forth motion. However, it is necessary for this to be the case as, when this method is called in game,
+        it is done so by running a for loop to check through the entire ArrayList. The type of the ArrayList is Platform.
+        Therefore, there must be a move method in Platform for it to be possible to call this method.
+
+        The rest of the program does not feature any exceptionally idiosyncratic logic or methodology. We used an
+        ArrayList rather than a Array for the platforms in order to best account for rapid generation and removal of
+        platforms.
+
+        Though it is noted below, we figured that it would be best to emphasize how we differed from the standard,
+        full functionality of the program as described in the handout.
+
+            First, we added a background image rather than having a plain white background.
+
+            Second, we gave the doodle a face (made it a composite shape) by adding two circles and a line to represent
+            two eyes and a mouth.
+
+            Third, we added drop shadows to all of the platforms.
+
+            Fourth, we chose to place the label displaying the game over message for a better appearance.
+
+
+
+
+
+Known Bugs: No known bugs
+
+
+
+Debugging Collaborators: None
+
+
+
+Extra Credit:
+
+            1. Background image
+            2. Composite shape for doodle
+            3. Drop shadows for the platforms
+            4. Composite shape for game over message
