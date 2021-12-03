@@ -70,6 +70,10 @@ public class DoodleJump implements Game {
         return Constants.DURATION;
     }
 
+    @Override
+    public void restart(){
+
+    }
     /**
      * if platform is blue, make it move
      */
@@ -176,13 +180,13 @@ public class DoodleJump implements Game {
     /**
      * checks if doodle falls and stops timeline which stops everything else
      */
-//    public void checkLose(){
-//        if (this.doodle.getPositionY() > Constants.STAGE_HEIGHT - Constants.QUIT_PANE_HEIGHT){
-//            new GameOver(this.gamePane);
-//            this.timeline.stop();
-//
-//        }
-//    }
+    public boolean checkForGameOver(){
+        if (this.doodle.getPositionY() > Constants.STAGE_HEIGHT - Constants.QUIT_PANE_HEIGHT){
+            return true;
+
+        }
+        return false;
+    }
 
     /**
      * if doodle is above mid, the platforms move down by the amount about mid

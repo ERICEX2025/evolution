@@ -13,11 +13,11 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) {
-        PaneOrganizer organizer = new PaneOrganizer();
-        Scene scene = new Scene(organizer.getRoot(), Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
-        stage.setScene(scene);
-        stage.setTitle("FlappyBird");
-        stage.show();
+//        PaneOrganizer organizer = new PaneOrganizer();
+//        Scene scene = new Scene(organizer.getRoot(), Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
+//        stage.setScene(scene);
+//        stage.setTitle("FlappyBird");
+//        stage.show();
     }
 
     public static void main(String[] argv) {

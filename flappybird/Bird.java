@@ -35,6 +35,9 @@ public class Bird {
     public void addGravity(){
         this.velocityY = this.velocityY + Constants.GRAVITY * Constants.DURATION;
         this.positionY = this.positionY + this.velocityY * Constants.DURATION;
+        if(this.positionY < 0){
+            this.positionY = 0;
+        }
         this.bird.setCenterY(this.positionY);
         this.eye.setCenterY(this.positionY);
 
@@ -42,6 +45,10 @@ public class Bird {
 
     public double getY(){
         return this.positionY;
+    }
+
+    public double getX(){
+        return this.positionX;
     }
     public boolean checkIntersection(Bounds bound){
         return this.bird.intersects(bound);

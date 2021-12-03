@@ -7,10 +7,12 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,10 +36,9 @@ public class Arcade {
 
 
     private void setUpArcade(){
-        this.topPane.getChildren().clear();
-        this.root.getChildren().remove(this.topPane);
         this.gamePane.getChildren().clear();
         this.bottomPane.getChildren().clear();
+        this.root.getChildren().clear();
         VBox middlePane = new VBox();
 
         for(Games game : Games.values()){
@@ -59,17 +60,28 @@ public class Arcade {
     }
 
     private void startGame(Games game){
-        this.root.getChildren().clear();
         this.root.setCenter(this.gamePane);
         this.root.setBottom(this.bottomPane);
         this.setUpTopPane();
         this.currentGame = game.startGame(this.stage, this.gamePane, this.bottomPane);
-        KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) -> currentGame.updateGame());
+        KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) -> {
+            currentGame.updateGame(); this.gameOver();});
         this.timeline = new Timeline(kf1);
         this.timeline.setCycleCount(Animation.INDEFINITE);
         this.timeline.play();
     }
 
+    private void gameOver(){
+        if(this.currentGame.checkForGameOver()){
+            this.timeline.stop();
+            Label gameOver = new Label();
+            gameOver.setTextFill(Color.RED);
+            gameOver.setText("Game Over");
+            gameOver.setLayoutX(gamePane.getHeight()/2);
+            gameOver.setLayoutY(gamePane.getWidth()/2);
+            this.gamePane.getChildren().add(gameOver);
+        }
+    }
 
 
     private void setUpTopPane(){
@@ -83,7 +95,7 @@ public class Arcade {
         quit.setFocusTraversable(false);
 
         Button restart = new Button("Restart");
-//        restart.setOnAction(Action -> this.currentGame.restart());
+        restart.setOnAction(Action -> this.restart());
         restart.setFocusTraversable(false);
 
         this.topPane.setAlignment(Pos.CENTER);
@@ -92,8 +104,11 @@ public class Arcade {
         this.root.setTop(this.topPane);
     }
 
+    private void restart(){
+        timeline.play();
+        this.currentGame.restart();
+    }
     private void back(){
-
         this.currentGame = null;
         this.timeline.stop();
         this.setUpArcade();

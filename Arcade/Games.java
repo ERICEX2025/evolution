@@ -3,6 +3,7 @@ package evolution.Arcade;
 import evolution.Arcade.Game;
 import evolution.doodlejump.DoodleJump;
 import evolution.doodlejump.PaneOrganizer;
+import evolution.flappybird.FlappyBird;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +18,10 @@ public enum Games {
     public String getName() {
         switch (this) {
             case DOODLEJUMP:
-                return "doodleJump";
+                return "DoodleJump";
+
+            case FLAPPYBIRD:
+                return "FlappyBird";
 
             default:
                 return null;
@@ -26,8 +30,12 @@ public enum Games {
     public Game startGame(Stage stage, Pane gamePane, VBox bottomPane){
         switch (this) {
             case DOODLEJUMP:
-                DoodleJump game = new DoodleJump(stage, gamePane, bottomPane);
-                return game;
+                DoodleJump doodleGame = new DoodleJump(stage, gamePane, bottomPane);
+                return doodleGame;
+
+            case FLAPPYBIRD:
+                FlappyBird flappyGame = new FlappyBird(stage, gamePane, bottomPane);
+                return flappyGame;
 
             default:
                 return null;

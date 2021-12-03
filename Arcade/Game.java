@@ -13,8 +13,10 @@ public interface Game {
 
     double setDuration();
 
-//    void restart();
-//    void update();
+    boolean checkForGameOver();
+
+    void restart();
+
 //    void pause();
 
 }
