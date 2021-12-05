@@ -16,8 +16,10 @@ public class Pipe {
                 + Constants.PIPE_GAP_POSITION_MIN);
         this.pipeTop = new Rectangle(this.xPos, Constants.PIPE_TOP_INITIAL_Y,
                 Constants.PIPE_WIDTH, random);
+        this.pipeTop.setFill(Color.GREEN);
         this.pipeBot = new Rectangle(this.xPos, random + 100, Constants.PIPE_WIDTH,
                 Constants.STAGE_HEIGHT - (random + 100));
+        this.pipeBot.setFill(Color.GREEN);
     }
 
     public int getPosX(){

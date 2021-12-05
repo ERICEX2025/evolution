@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import org.w3c.dom.css.Rect;
 
 /**
  * composite shape
@@ -60,9 +61,10 @@ public class Doodle {
         myPane.getChildren().add(this.leftEye);
         myPane.getChildren().add(this.rightEye);
         myPane.getChildren().add(this.mouth);
-        myPane.setFocusTraversable(true);
-        myPane.setOnKeyPressed((KeyEvent e) -> this.keyHandler(e));
+//        myPane.setFocusTraversable(true);
+//        myPane.setOnKeyPressed((KeyEvent e) -> this.keyHandler(e));
     }
+
 
     /**
      * adds gravity to all the shapes
@@ -131,28 +133,6 @@ public class Doodle {
      * set up left and right keys and if they move offscreen set them on the other side
      * @param e
      */
-    public void keyHandler (KeyEvent e){
-        switch (e.getCode()){
-            case LEFT:
-                this.moveLeft();
-                if (this.doodle.getX() < 0){
-                    this.doodle.setX(Constants.STAGE_WIDTH - Constants.DOODLE_WIDTH);
-                }
-                break;
-
-            case RIGHT:
-
-                this.moveRight();
-                if (this.doodle.getX() >= Constants.STAGE_WIDTH){
-                    this.doodle.setX(0);
-                }
-                break;
-
-            default:
-                break;
-        }
-        e.consume();
-    }
 
     /**
      * moves composite shape right
@@ -176,4 +156,7 @@ public class Doodle {
         this.mouth.setEndX(this.doodle.getX()+15);
     }
 
+    public Rectangle getDoodle(){
+        return this.doodle;
+    }
 }

@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -72,7 +73,7 @@ public class DoodleJump implements Game {
 
     @Override
     public void restart(){
-
+    this.score = 0;
     }
     /**
      * if platform is blue, make it move
@@ -201,6 +202,30 @@ public class DoodleJump implements Game {
                 this.platforms.get(i).moveDown(amountAboveMid);
             }
         }
+    }
+
+    @Override
+    public void keyHandler (KeyEvent e){
+        switch (e.getCode()){
+            case LEFT:
+                this.doodle.moveLeft();
+                if (this.doodle.getDoodle().getX() < 0){
+                    this.doodle.getDoodle().setX(Constants.STAGE_WIDTH - Constants.DOODLE_WIDTH);
+                }
+                break;
+
+            case RIGHT:
+
+                this.doodle.moveRight();
+                if (this.doodle.getDoodle().getX() >= Constants.STAGE_WIDTH){
+                    this.doodle.getDoodle().setX(0);
+                }
+                break;
+
+            default:
+                break;
+        }
+        e.consume();
     }
 }
 

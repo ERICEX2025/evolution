@@ -28,8 +28,6 @@ public class FlappyBird implements Game {
         bottomPane.getChildren().addAll(this.scoreLabel, this.highScoreLabel);
 
         this.bird = new Bird(gamePane);
-        gamePane.setFocusTraversable(true);
-        gamePane.setOnKeyPressed((KeyEvent e) -> this.keyHandler(e));
 
         this.pipes = new ArrayList<>();
         this.rightMost = new Pipe(Constants.PIPE_INITIAL_X);
@@ -82,8 +80,16 @@ public class FlappyBird implements Game {
     }
     @Override
     public void restart(){
+        //whhy doesnt this clear the highscore
+        this.gamePane.getChildren().clear();
         this.score = 0;
         this.scoreLabel.setText("Score: " + this.score);
+        this.bird = new Bird(gamePane);
+        this.pipes = new ArrayList<>();
+        this.rightMost = new Pipe(Constants.PIPE_INITIAL_X);
+        this.gamePane.getChildren().addAll(this.rightMost.getTopPipe(), this.rightMost.getBotPipe());
+        this.pipes.add(this.rightMost);
+
     }
 
     public boolean collisionCheck(){
@@ -104,7 +110,6 @@ public class FlappyBird implements Game {
         this.rightMost = this.pipes.get(this.pipes.size()-1);
         while (this.rightMost.getPosX() < Constants.STAGE_WIDTH) {
             Pipe newPipe = new Pipe(this.rightMost.getPosX() + 250);
-            System.out.println(this.rightMost.getPosX() + 250);
             this.gamePane.getChildren().addAll(newPipe.getTopPipe(), newPipe.getBotPipe());
             this.pipes.add(newPipe);
             this.rightMost = newPipe;
@@ -116,7 +121,6 @@ public class FlappyBird implements Game {
     public void removePipes(){
         for (int i = 0; i < this.pipes.size(); i++){
             if (this.pipes.get(i).getPosX() < 0){
-                System.out.println("Remove");
                 this.gamePane.getChildren().removeAll(this.pipes.get(i).getTopPipe(),
                         this.pipes.get(i).getBotPipe());
                 this.pipes.remove(this.pipes.get(i));
@@ -125,6 +129,7 @@ public class FlappyBird implements Game {
         }
     }
 
+    @Override
     public void keyHandler (KeyEvent e){
         switch (e.getCode()){
             case SPACE:

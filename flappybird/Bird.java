@@ -22,11 +22,11 @@ public class Bird {
     }
 
     private void setUpBird() {
-        this.bird = new Circle(Constants.BIRDINITIAL_X, Constants.BIRDINITIAL_Y, Constants.BIRD_RADIUS, Color.PURPLE);
+        this.bird = new Circle(Constants.BIRDINITIAL_X, Constants.BIRDINITIAL_Y, Constants.BIRD_RADIUS, Color.ORANGE);
         this.positionY = Constants.BIRDINITIAL_Y;
         this.positionX = Constants.BIRDINITIAL_X;
         this.eye = new Circle(Constants.BIRDINITIAL_X + Constants.EYEOFFSET_X, Constants.BIRDINITIAL_Y -
-                Constants.EYEOFFSET_Y, Constants.EYE_RADIUS, Color.BLACK);
+                Constants.EYEOFFSET_Y, Constants.EYE_RADIUS, Color.YELLOW);
     }
     private void setUpPane(){
         this.myPane.getChildren().add(this.bird);
