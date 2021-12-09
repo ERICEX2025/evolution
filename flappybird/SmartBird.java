@@ -78,13 +78,12 @@ public class SmartBird extends FlappyBird implements Game {
         Bird.addGravity();
         }
 
-        this.setDistanceFromNextPipe();
-        this.setDistanceFromGapHeight();
-        this.updateNeuralNetworkForBirds();
-
         this.movePipes();
         this.generatePipes();
         this.removePipes();
+
+        this.updateNeuralNetworkForBirds();
+
     }
 
     @Override
@@ -121,6 +120,7 @@ public class SmartBird extends FlappyBird implements Game {
 //        }
 
     public void updateNeuralNetworkForBirds(){
+
         this.setDistanceFromNextPipe();
         this.setDistanceFromGapHeight();
         for(BirdsThatLearn Bird : this.birds){
@@ -132,7 +132,7 @@ public class SmartBird extends FlappyBird implements Game {
     }
 
     public void setDistanceFromNextPipe() {
-        if(this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() == 0){
+        if(this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() < 0){
             this.distanceFromPipe = this.getPipes().get(1).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX();
         }
         else{
@@ -141,11 +141,11 @@ public class SmartBird extends FlappyBird implements Game {
     }
 
     public void setDistanceFromGapHeight() {
-        if(this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() == 0){
+        if(this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() < 0){
             this.distanceFromGapHeight = this.getPipes().get(1).getGapHeight() - this.birds.get(0).getY();
         }
         else{
-            this.distanceFromGapHeight = this.getPipes().get(0).getPosX() - this.birds.get(0).getY();
+            this.distanceFromGapHeight = this.getPipes().get(0).getGapHeight() - this.birds.get(0).getY();
         }
     }
 

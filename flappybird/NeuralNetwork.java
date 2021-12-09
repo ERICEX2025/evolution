@@ -16,12 +16,13 @@ public class NeuralNetwork {
         this.setUpSyn1();
     }
 
-    public boolean updateInputNodes(double distanceFromPipe, double velocity, double pipeGapHeight){
-        this.distanceFromPipe = distanceFromPipe/Constants.STAGE_WIDTH;
-        this.pipeGapHeight = pipeGapHeight/Constants.STAGE_HEIGHT;
+    public boolean updateInputNodes(double distanceFromPipe, double pipeGapHeight, double velocity){
+        this.distanceFromPipe = normalize(distanceFromPipe);
+        this.pipeGapHeight = normalize(pipeGapHeight);
         this.velocity = normalize(velocity);
 
-        this.inputNodes = new double[][]{{this.distanceFromPipe}, {this.velocity}, {this.pipeGapHeight}};
+        this.inputNodes = new double[][]{{this.distanceFromPipe}, {this.pipeGapHeight}, {this.velocity}};
+//        System.out.println(inputNodes[1][0]);
         return this.jump();
     }
 
@@ -73,6 +74,17 @@ public class NeuralNetwork {
         }
         return null;
     }
+//    double[][] dotProduct(double[][] A, double[][] B):
+//            // assume A has m rows and n columns,
+//// B has p rows and q columns
+//            if n and p are equal
+//    make an empty double[][] C with m rows and q columns
+//		for each row in A (from 0 to m):
+//            for each col in B (from 0 to q):
+//    from i=0 to p:
+//    C[row][col] += A[row][i] * B[i][col]
+//            return C
+
 
     public double forwardPropagation(double[][] inputNodes){
         double[][] hiddenLayer = this.matrixMultiplication(syn0, inputNodes);
@@ -81,13 +93,12 @@ public class NeuralNetwork {
         }
         double[][] outputNode = this.matrixMultiplication(syn1, hiddenLayer);
 
-        //this is always 0.5
         return this.normalize(outputNode[0][0]);
     }
 
 
     public boolean jump() {
-        if(this.forwardPropagation(inputNodes) >= 0.5){
+        if(this.forwardPropagation(this.inputNodes) >= 0.5){
         return true;
         }
         else{
