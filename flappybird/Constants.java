@@ -24,4 +24,7 @@ public class Constants {
     public static final int PIPE_WIDTH = 50;
     public static final int PIPE_INITIAL_X = 400;
     public static final int PIPE_TOP_INITIAL_Y = 0;
+
+    public static final double SELECTION_RATE = 0;
+    public static final double MUTATION_RATE = 0;
 }

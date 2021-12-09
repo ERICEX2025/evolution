@@ -10,28 +10,26 @@ public class Bird {
     private Circle bird;
     private double positionY;
     private double velocityY;
-    private double positionX;
+    private int positionX;
     private Circle eye;
-    private Pane myPane;
+    private Pane gamePane;
 
     public Bird(Pane myPane){
-        this.myPane = myPane;
+        this.gamePane = myPane;
+        this.positionX = Constants.BIRDINITIAL_X;
+        this.positionY = Constants.BIRDINITIAL_Y;
         this.velocityY = 0;
         this.setUpBird();
-        this.setUpPane();
     }
 
     private void setUpBird() {
         this.bird = new Circle(Constants.BIRDINITIAL_X, Constants.BIRDINITIAL_Y, Constants.BIRD_RADIUS, Color.ORANGE);
-        this.positionY = Constants.BIRDINITIAL_Y;
-        this.positionX = Constants.BIRDINITIAL_X;
         this.eye = new Circle(Constants.BIRDINITIAL_X + Constants.EYEOFFSET_X, Constants.BIRDINITIAL_Y -
                 Constants.EYEOFFSET_Y, Constants.EYE_RADIUS, Color.YELLOW);
+        this.gamePane.getChildren().add(this.bird);
+        this.gamePane.getChildren().add(this.eye);
     }
-    private void setUpPane(){
-        this.myPane.getChildren().add(this.bird);
-        this.myPane.getChildren().add(this.eye);
-    }
+
     public void addGravity(){
         this.velocityY = this.velocityY + Constants.GRAVITY * Constants.DURATION;
         this.positionY = this.positionY + this.velocityY * Constants.DURATION;
@@ -40,21 +38,34 @@ public class Bird {
         }
         this.bird.setCenterY(this.positionY);
         this.eye.setCenterY(this.positionY);
+    }
 
+    public void removeBird(){
+        this.gamePane.getChildren().removeAll(this.bird, this.eye);
     }
 
     public double getY(){
         return this.positionY;
     }
 
-    public double getX(){
+    public int getX(){
         return this.positionX;
     }
+
     public boolean checkIntersection(Bounds bound){
         return this.bird.intersects(bound);
+    }
+
+    public double getVelocityY(){
+        return this.velocityY;
     }
 
     public void resetVelocity(){
         this.velocityY = Constants.REBOUND_VELOCITY;
     }
+
+    public void setColor(Color color){
+        this.bird.setFill(color);
+    }
+
 }

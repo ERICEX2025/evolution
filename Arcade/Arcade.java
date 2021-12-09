@@ -74,9 +74,8 @@ public class Arcade {
 
 
     private void startGame(Games game){
-        this.root.setTop(this.topPane);
 
-        this.currentGame = game.startGame(this.stage, this.gamePane, this.bottomPane);
+        this.currentGame = game.startGame(this.timeline, this.stage, this.gamePane, this.bottomPane);
         KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) -> {
             currentGame.updateGame(); this.gameOver();});
         this.timeline = new Timeline(kf1);
@@ -85,10 +84,12 @@ public class Arcade {
 
         this.root.setCenter(this.gamePane);
         this.root.setBottom(this.bottomPane);
+        this.root.setTop(this.topPane);
     }
 
     private void setUpTopPane(){
         this.topPane = new HBox();
+
         Button back = new Button("Back");
         back.setOnAction(Action -> this.back());
         back.setFocusTraversable(false);
@@ -116,6 +117,7 @@ public class Arcade {
     private void clearEverything(){
         this.gamePane.getChildren().clear();
         this.bottomPane.getChildren().clear();
+        //not sure why the topPane Buttons are also cleared
         this.root.getChildren().clear();
     }
 
@@ -141,13 +143,13 @@ public class Arcade {
         this.gameOver = new Label();
         this.gameOver.setTextFill(Color.RED);
         this.gameOver.setText("Game Over");
-//        this.gameOver.setLayoutX(gamePane.getHeight()/2);
-//        this.gameOver.setLayoutY(gamePane.getWidth()/2);
+//        this.gameOver.setLayoutX();
+//        this.gameOver.setLayoutY();
     }
 
     private void setUpPauseLabel() {
         this.pauseLabel = new Label();
-        this.pauseLabel.setTextFill(Color.RED);
+        this.pauseLabel.setTextFill(Color.PURPLE);
         this.pauseLabel.setText("Pause");
 //        this.pauseLabel.setLayoutX(gamePane.getHeight()/2);
 //        this.pauseLabel.setLayoutY(gamePane.getWidth()/2);
@@ -156,7 +158,6 @@ public class Arcade {
 
 
     public void keyHandler(KeyEvent e) {
-        System.out.println("hi");
         KeyCode keyPressed = e.getCode();
         if(!this.currentGame.checkForGameOver()) {
             if (keyPressed == P) {

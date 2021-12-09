@@ -1,11 +1,5 @@
 package evolution.cartoon;
 
-import cartoon.Constants;
-import cartoon.PaneOrganizer;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 
 /**
  * Here is my Cartoon App Class!

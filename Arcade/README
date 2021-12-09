@@ -1,2 +1,24 @@
+Why does the topPane buttons clear by doing root.clear()
 
-BUG: Panes arent separating, why does keypressed specifically in doodlejump fk up the buttons
+inputs should be normalized to a decimal between 0 and 1 by using a fraction
+distance from nearest Pipe
+Pipe gap Height
+current Position
+
+the number of columns the first matrix has must be equal to the number of rows the second matrix has
+the output has the same number of rows of the first matrix and the same number of columns as the second matrix
+
+take dot product of random weights and inputs
+activate this ^ sigmoid to make it between 0 and 1
+take dot product of random weights and hidden layer
+activate this ^ sigmoid to make it between 0 and 1
+return to bird
+
+weights should be a decimal between -1 and 1
+should be able to get the same weights for next generation
+
+Think about a case where you may not want to select, and what should happen in that situation.
+selection rate
+
+mutation rate
+mutate less as fitness increases
