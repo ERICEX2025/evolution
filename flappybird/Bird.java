@@ -68,4 +68,8 @@ public class Bird {
         this.bird.setFill(color);
     }
 
+    public void setOpacity(){
+        this.bird.setOpacity(0.1);
+        this.eye.setOpacity(0.1);
+    }
 }

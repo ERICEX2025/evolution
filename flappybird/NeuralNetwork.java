@@ -16,10 +16,15 @@ public class NeuralNetwork {
         this.setUpSyn1();
     }
 
+    public NeuralNetwork(double[][] syn0, double[][] syn1){
+        this.syn0 = syn0;
+        this.syn1 = syn1;
+    }
+
     public boolean updateInputNodes(double distanceFromPipe, double pipeGapHeight, double velocity){
-        this.distanceFromPipe = normalize(distanceFromPipe);
-        this.pipeGapHeight = normalize(pipeGapHeight);
-        this.velocity = normalize(velocity);
+        this.distanceFromPipe = distanceFromPipe/Constants.STAGE_WIDTH;
+        this.pipeGapHeight = pipeGapHeight/Constants.STAGE_HEIGHT;
+        this.velocity = velocity/Constants.MAX_VELOCITY;
 
         this.inputNodes = new double[][]{{this.distanceFromPipe}, {this.pipeGapHeight}, {this.velocity}};
 //        System.out.println(inputNodes[1][0]);
@@ -30,8 +35,9 @@ public class NeuralNetwork {
         this.syn0 = new double[2][3];
         for(int r = 0; r < this.syn0.length; r++){
             for(int c = 0; c < this.syn0[0].length; c++) {
-                Random random = new Random();
-                this.syn0[r][c] = -1 + (1 - (-1)) * random.nextDouble();
+//                Random random = new Random();
+//                this.syn0[r][c] = -1 + (1 - (-1)) * random.nextDouble();
+                this.syn0[r][c] = (Math.random()*2)-1;
             }
         }
     }
@@ -40,9 +46,9 @@ public class NeuralNetwork {
         this.syn1 = new double[1][2];
         for(int r = 0; r < this.syn1.length; r++){
             for(int c = 0; c < this.syn1[0].length; c++) {
-                Random random = new Random();
-                this.syn0[r][c] = -1 + (1 - (-1)) * random.nextDouble();
-
+//                Random random = new Random();
+//                this.syn0[r][c] = -1 + (1 - (-1)) * random.nextDouble();
+                this.syn1[r][c] = (Math.random()*2)-1;
             }
         }
     }
@@ -52,13 +58,13 @@ public class NeuralNetwork {
         return newNumber;
     }
 
-    public double[][] getSyn0(){
-        return this.syn0;
-    }
-
-    public double[][] getSyn1(){
-        return  this.syn1;
-    }
+//    public double[][] getSyn0(){
+//        return this.syn0;
+//    }
+//
+//    public double[][] getSyn1(){
+//        return  this.syn1;
+//    }
 
     public double[][] matrixMultiplication(double[][] weight, double[][] nodes){
         if(weight[0].length == nodes.length){
@@ -74,6 +80,7 @@ public class NeuralNetwork {
         }
         return null;
     }
+
 //    double[][] dotProduct(double[][] A, double[][] B):
 //            // assume A has m rows and n columns,
 //// B has p rows and q columns
@@ -93,12 +100,14 @@ public class NeuralNetwork {
         }
         double[][] outputNode = this.matrixMultiplication(syn1, hiddenLayer);
 
+//        System.out.println(this.normalize(outputNode[0][0]));
         return this.normalize(outputNode[0][0]);
     }
 
 
     public boolean jump() {
-        if(this.forwardPropagation(this.inputNodes) >= 0.5){
+        System.out.println(this.forwardPropagation(this.inputNodes));
+        if(this.forwardPropagation(this.inputNodes) > 0.5){
         return true;
         }
         else{
