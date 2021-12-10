@@ -1,6 +1,5 @@
 package evolution.cartoon;
 
-import cartoon.Constants;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

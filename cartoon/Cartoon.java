@@ -1,8 +1,5 @@
 package evolution.cartoon;
 
-import cartoon.Lolipop;
-import cartoon.Rain;
-import cartoon.Turtle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

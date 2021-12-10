@@ -38,7 +38,7 @@ public class DoodleJump implements Game {
      */
     public DoodleJump(Stage stage, Pane gamePane, VBox bottomPane){
         this.gamePane = gamePane;
-        this.gamePane.setPrefSize(doodlejump.Constants.STAGE_WIDTH, doodlejump.Constants.STAGE_HEIGHT);
+        this.gamePane.setPrefSize(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
         stage.sizeToScene();
         this.counter = new Label();
         bottomPane.getChildren().add(this.counter);

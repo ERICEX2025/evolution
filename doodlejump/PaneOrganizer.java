@@ -1,6 +1,5 @@
 package evolution.doodlejump;
 
-import doodlejump.Constants;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -31,7 +30,7 @@ public class PaneOrganizer {
         this.root = new BorderPane();
 
         this.gamePane = new Pane();
-        this.gamePane.setPrefSize(doodlejump.Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
+        this.gamePane.setPrefSize(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
         this.score = new Label();
         this.gamePane.getChildren().add(score);
         this.root.setCenter(gamePane);

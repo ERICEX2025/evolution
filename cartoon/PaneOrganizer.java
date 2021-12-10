@@ -1,7 +1,5 @@
 package evolution.cartoon;
 
-import cartoon.Cartoon;
-import cartoon.Constants;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
