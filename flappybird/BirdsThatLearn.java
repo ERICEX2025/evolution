@@ -22,8 +22,8 @@ public class BirdsThatLearn extends Bird{
         return this.NeuralNetwork;
     }
 
-    public void setFitness(int fitness){
-        this.fitness = fitness;
+    public void addFitness(int fitness){
+        this.fitness++;
     }
 
     public int getFitness(){

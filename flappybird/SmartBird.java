@@ -2,8 +2,11 @@ package evolution.flappybird;
 
 import evolution.Arcade.Game;
 import javafx.animation.Timeline;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -12,8 +15,9 @@ import java.util.ArrayList;
 
 public class SmartBird extends FlappyBird implements Game {
 
+    private Timeline timeline;
     private ArrayList<BirdsThatLearn> birds;
-    private Bird[] topFive;
+    private Bird[] topThree;
     private double distanceFromPipe;
     private double distanceFromGapHeight;
     private Pane gamePane;
@@ -24,21 +28,20 @@ public class SmartBird extends FlappyBird implements Game {
     private Label currentFitnessLabel;
     private Label avgFitnessLastGenLabel;
     private Label bestFitnessLastGenLabel;
-    private Label bestAllTimeFitnessLastGenLabel;
+    private Label bestAllTimeFitnessLabel;
     private int aliveCounter;
     private int generationCounter;
     private int currentFitnessCounter;
     private int avgFitnessLastGen;
     private int bestFitnessLastGen;
-    private int bestAllTimeFitnessLastGen;
-
-    private int score;
+    private int bestAllTimeFitness;
 
     public SmartBird(Timeline timeline,Pane gamePane, VBox bottomPane) {
         super(gamePane, bottomPane);
+        this.timeline = timeline;
         this.gamePane = gamePane;
         this.bottomPane = bottomPane;
-//        this.setUpLabels();
+        this.setUpBottomPane();
         this.birds = new ArrayList<>();
 //        this.topFive = new Bird[5];
         for (int i = 0; i < 50; i++) {
@@ -59,38 +62,59 @@ public class SmartBird extends FlappyBird implements Game {
         return Color.rgb(red, green, blue);
     }
 
+    public void setUpBottomPane() {
+        this.aliveLabel = new Label();
+        this.generationLabel = new Label();
+        this.currentFitnessLabel = new Label();
+        this.avgFitnessLastGenLabel = new Label();
+        this.bestFitnessLastGenLabel = new Label();
+        this.bestAllTimeFitnessLabel = new Label();
 
-    @Override
-    public void setUpLabels() {
-//        this.aliveLabel = new Label();
-//        this.generationLabel = new Label();
-//        this.currentFitnessLabel = new Label();
-//        this.avgFitnessLastGenLabel = new Label();
-//        this.bestFitnessLastGenLabel = new Label();
-//        this.bestAllTimeFitnessLastGenLabel = new Label();
-//
-//        this.aliveCounter = 50;
-//        this.generationCounter = 0;
-//        this.currentFitnessCounter = 0;
-//        this.avgFitnessLastGen = 0;
-//        this.bestFitnessLastGen = 0;
-//        this.bestAllTimeFitnessLastGen = 0;
-//
-//        this.aliveLabel.setText("Alive: " + this.aliveCounter);
-//        this.generationLabel.setText("Generation: " + this.generationCounter);
-//        this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
-//        this.avgFitnessLastGenLabel.setText("AvgFitnessLastGen: " + this.avgFitnessLastGen);
-//        this.bestFitnessLastGenLabel.setText("BestFitnessLastGen: " + this.bestFitnessLastGen);
-//        this.bestAllTimeFitnessLastGenLabel.setText("BestAllTimeFitnessLastGen: " + this.bestAllTimeFitnessLastGen);
-//
-//        this.bottomPane.getChildren().addAll(this.aliveLabel, this.generationLabel, this.currentFitnessLabel
-//        , this.avgFitnessLastGenLabel, this.bestFitnessLastGenLabel, this.bestAllTimeFitnessLastGenLabel);
+        this.aliveCounter = 50;
+        this.generationCounter = 0;
+        this.currentFitnessCounter = 0;
+        this.avgFitnessLastGen = 0;
+        this.bestFitnessLastGen = 0;
+        this.bestAllTimeFitness = 0;
+
+        HBox buttonPane = new HBox();
+        buttonPane.setAlignment(Pos.CENTER);
+        Button oneSpeed = new Button();
+        Button twoSpeed = new Button();
+        Button fiveSpeed = new Button();
+        Button max = new Button();
+
+        oneSpeed.setText("1x");
+        twoSpeed.setText("2x");
+        fiveSpeed.setText("5x");
+        max.setText("Max");
+
+        oneSpeed.setOnAction(ActionEvent -> this.timeline.setRate(1));
+        oneSpeed.setFocusTraversable(false);
+        twoSpeed.setOnAction(ActionEvent -> this.timeline.setRate(2));
+        twoSpeed.setFocusTraversable(false);
+        fiveSpeed.setOnAction(ActionEvent -> this.timeline.setRate(5));
+        fiveSpeed.setFocusTraversable(false);
+        max.setOnAction(ActionEvent -> this.timeline.setRate(100));
+        max.setFocusTraversable(false);
+
+        buttonPane.getChildren().addAll(oneSpeed,
+                twoSpeed, fiveSpeed, max);
+
+        this.updateLabels();
+
+        this.bottomPane.getChildren().addAll(this.aliveLabel, this.generationLabel, this.currentFitnessLabel
+        , this.avgFitnessLastGenLabel, this.bestFitnessLastGenLabel, this.bestAllTimeFitnessLabel, buttonPane);
     }
 
-//    public void updateLabels(){
-//        this.currentFitnessCounter++;
-//        this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
-//    }
+    public void updateLabels(){
+        this.aliveLabel.setText("Alive: " + this.aliveCounter);
+        this.generationLabel.setText("Generation: " + this.generationCounter);
+        this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
+        this.avgFitnessLastGenLabel.setText("AvgFitnessLastGen: " + this.avgFitnessLastGen);
+        this.bestFitnessLastGenLabel.setText("BestFitnessLastGen: " + this.bestFitnessLastGen);
+        this.bestAllTimeFitnessLabel.setText("BestAllTimeFitnessLastGen: " + this.bestAllTimeFitness);
+    }
 
 
     @Override
@@ -167,7 +191,6 @@ public class SmartBird extends FlappyBird implements Game {
     public void updateNeuralNetworkForBirds(){
 
         this.setDistanceFromNextPipe();
-//        int i = 0;
         for(BirdsThatLearn Bird : this.birds){
 
             if(this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() < 0){
@@ -176,15 +199,11 @@ public class SmartBird extends FlappyBird implements Game {
             else{
                 this.distanceFromGapHeight = this.getPipes().get(0).getGapHeight() - Bird.getY();
             }
-//            System.out.println("Distance: " + this.distanceFromPipe + "| GapHeight: " + this.distanceFromGapHeight +
-//                    "| Velocity: " + Bird.getVelocityY());
 
             if(Bird.getNeuralNetwork().updateInputNodes(this.distanceFromPipe, this.distanceFromGapHeight,
                     Bird.getVelocityY()) == true){
-//                System.out.println(Bird.getY() + " | " + i);
                 Bird.resetVelocity();
             }
-//            i++;
         }
     }
 
@@ -196,12 +215,5 @@ public class SmartBird extends FlappyBird implements Game {
             this.distanceFromPipe = this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX();
         }
     }
-
-
-//    public void checkForBirdPassingPipe(){
-//        if(this.birds.get(0).getX() == this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH){
-//            this.score++;
-//        }
-//    }
 
 }

@@ -64,7 +64,7 @@ public class FlappyBird {
 
     public void generatePipes() {
         this.rightMost = this.pipes.get(this.pipes.size()-1);
-        while (this.rightMost.getPosX() < Constants.GAMEPANE_WIDTH/2) {
+        while (this.rightMost.getPosX() < Constants.GAMEPANE_WIDTH/2 + 1) {
             Pipe newPipe = new Pipe(this.rightMost.getPosX() + 250);
             this.gamePane.getChildren().addAll(newPipe.getTopPipe(), newPipe.getBotPipe());
             this.pipes.add(newPipe);

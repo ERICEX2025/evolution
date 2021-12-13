@@ -95,7 +95,7 @@ public class Arcade {
             this.updateGameAndCheckForGameOver());
         this.timeline = new Timeline(kf1);
         this.timeline.setCycleCount(Animation.INDEFINITE);
-        this.timeline.play();;
+        this.timeline.play();
         this.root.setCenter(this.gamePane);
         this.root.setBottom(this.bottomPane);
         this.root.setTop(this.topPane);
@@ -109,6 +109,7 @@ public class Arcade {
         this.bottomPane.setStyle(Constants.LIGHT_BLUE);
         this.bottomPane.setAlignment(Pos.CENTER);
         this.bottomPane.setSpacing(Constants.TEXT_SPACING);
+        this.bottomPane.setFocusTraversable(false);
     }
 
     private void setUpTopPane(){

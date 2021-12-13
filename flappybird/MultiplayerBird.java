@@ -26,7 +26,9 @@ public class MultiplayerBird extends FlappyBird implements Game {
 
     public void setUpBirds(){
         this.bird1 = new Bird(gamePane);
+        this.bird1.setOpacity();
         this.bird2 = new Bird(gamePane);
+        this.bird2.setOpacity();
         this.bird2.setColor(Color.PURPLE);
     }
 

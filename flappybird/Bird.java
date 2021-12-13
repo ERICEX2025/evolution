@@ -36,7 +36,6 @@ public class Bird {
         if(this.positionY < Constants.BIRD_RADIUS){
             this.positionY = Constants.BIRD_RADIUS;
         }
-        System.out.println(this.velocityY);
         this.bird.setCenterY(this.positionY);
         this.eye.setCenterY(this.positionY);
     }
