@@ -1,10 +1,6 @@
 package evolution.Arcade;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 public interface Game {
 

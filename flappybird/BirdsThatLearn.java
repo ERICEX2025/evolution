@@ -15,9 +15,8 @@ public class BirdsThatLearn extends Bird{
 
     public BirdsThatLearn(double[][] syn0, double[][] syn1, Pane myPane){
         super(myPane);
-        this.NeuralNetwork = new NeuralNetwork();
+        this.NeuralNetwork = new NeuralNetwork(syn0, syn1);
     }
-
 
     public NeuralNetwork getNeuralNetwork(){
         return this.NeuralNetwork;
@@ -26,6 +25,7 @@ public class BirdsThatLearn extends Bird{
     public void setFitness(int fitness){
         this.fitness = fitness;
     }
+
     public int getFitness(){
         return this.fitness;
     }

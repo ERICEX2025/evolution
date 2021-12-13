@@ -1,13 +1,17 @@
 package evolution.cartoon;
 
+import evolution.Arcade.Game;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import java.util.ArrayList;
@@ -16,10 +20,12 @@ import java.util.ArrayList;
  * high level logic class and does graphics that include logic
  * contains Turtle, Rain, and Lolipop
  */
-public class Cartoon{
+public class Cartoon implements Game {
 
     private Turtle me;
+    private Lolipop lolipop;
     private Pane middlePane;
+    private VBox bottomPane;
     //condition booleans
     private boolean startRain;
     private boolean directionRight;
@@ -34,29 +40,35 @@ public class Cartoon{
      * instantiates booleans, array, and int
      * sets up timeline and middlePane
      */
-    public Cartoon(Pane middlePane){
+    public Cartoon(Pane middlePane, VBox bottomPane){
         //named me because the turtle is me
+        this.middlePane = middlePane;
+        this.bottomPane = bottomPane;
+        this.setUp();
     this.me = new Turtle(middlePane);
-    new Lolipop(middlePane);
-    this.middlePane = middlePane;
+    this.lolipop = new Lolipop(middlePane);
     this.startRain = false;
     this.directionRight = true;
-    this.rainList = new ArrayList<Rain>();
+    this.rainList = new ArrayList<>();
     this.counterForArray = 0;
 
-    this.setupMiddlePane();
-    this.setupTimeline();
     }
 
     /**
      *  sets up and adds label for amount of steps the turtle takes
      *  lets keypressed work in middlePane
      */
-    private void setupMiddlePane(){
-        this.middlePane.getChildren().add(stepsLabel = new Label(" 0" + " steps"));
+    private void setUp(){
+        this.bottomPane.getChildren().add(stepsLabel = new Label(" 0" + " steps"));
         this.stepsLabel.setFont(Font.font(20));
-        this.middlePane.setOnKeyPressed((KeyEvent e) -> this.handleKeyPress(e));
-        this.middlePane.setFocusTraversable(true);
+
+        Image image = new Image(this.getClass().getResourceAsStream("VioletScene.jpg"));
+        ImageView iv = new ImageView(image);
+        iv.setFitWidth(Constants.APP_WIDTH);
+        iv.setPreserveRatio(true);
+        iv.setSmooth(true);
+        iv.setCache(true);
+        this.middlePane.getChildren().add(iv);
     }
 
     /**
@@ -94,11 +106,49 @@ public class Cartoon{
         timeline4.play();
     }
 
+    @Override
+    public void updateGame() {
+        this.me.move(directionRight);
+        this.updateStepsLabel();
+        this.createRainAndMakeItRainAtNormalSpeed();
+    }
+
+    private void createRainAndMakeItRainAtNormalSpeed(){
+        this.createRain(startRain);
+//        for(int i = 0; i < 3; i++) {
+//            this.createRain(startRain);
+//            System.out.println("hi");
+//        }
+        for(int i = 0; i < 500; i++) {
+            this.makeItRain();
+        }
+//        this.makeItRain();
+    }
+
+    @Override
+    public double setDuration() {
+        return 1;
+    }
+
+    @Override
+    public boolean checkForGameOver() {
+        if(this.me.getXPos() > this.lolipop.getXPos()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void restart() {
+
+    }
+
     /**
      * based on left or right arrow key, decide if directionRight is true or false
      * based on space bar decide if rain should start and stop generating
      */
-    private void handleKeyPress(KeyEvent e) {
+    @Override
+    public void keyHandler(KeyEvent e) {
         KeyCode keyPressed = e.getCode();
         if (keyPressed == KeyCode.SPACE) {
             this.startRain = !this.startRain;
@@ -110,6 +160,7 @@ public class Cartoon{
             this.directionRight = true;
         }
 
+        e.consume();
     }
 
     /**

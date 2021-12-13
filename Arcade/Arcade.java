@@ -21,10 +21,10 @@ import static javafx.scene.input.KeyCode.P;
 
 public class Arcade {
     private BorderPane root;
+    private VBox middlePane;
     private HBox topPane;
     private Pane gamePane;
     private VBox bottomPane;
-    private VBox middlePane;
 
     private Stage stage;
     private Timeline timeline;
@@ -32,21 +32,21 @@ public class Arcade {
 
     private Boolean pause;
     private Label pauseLabel;
-    private Label gameOver;
+    private Label gameOverLabel;
 
     public Arcade(Stage stage){
         this.root = new BorderPane();
-        this.topPane = new HBox();
-        this.gamePane = new Pane();
-        this.bottomPane = new VBox();
-
         this.stage = stage;
         this.pause = false;
 
         this.setUpArcade();
+
         this.setUpTopPane();
+        this.setUpBotPane();
         this.setUpGameOverLabel();
         this.setUpPauseLabel();
+
+        this.gamePane = new Pane();
         this.gamePane.setFocusTraversable(true);
         this.gamePane.setOnKeyPressed((KeyEvent keyPressed) -> this.keyHandler(keyPressed));
     }
@@ -64,34 +64,58 @@ public class Arcade {
         quit.setOnAction(ActionEvent -> System.exit(0));
         quit.setFocusTraversable(false);
 
-        this.middlePane.setAlignment(Pos.CENTER);
-        this.middlePane.setSpacing(10);
         this.middlePane.getChildren().add(quit);
-        this.middlePane.setPrefSize(400, 500);
+        this.middlePane.setPrefSize(Constants.ARCADE_WIDTH, Constants.ARCADE_HEIGHT);
+        this.middlePane.setAlignment(Pos.CENTER);
+        this.middlePane.setSpacing(Constants.TEXT_SPACING);
         this.root.setCenter(this.middlePane);
-
     }
 
+    private void setUpGameOverLabel(){
+        this.gameOverLabel = new Label();
+        this.gameOverLabel.setTextFill(Color.RED);
+        this.gameOverLabel.setText("Game Over");
+    }
 
+    private void setUpPauseLabel() {
+        this.pauseLabel = new Label();
+        this.pauseLabel.setTextFill(Color.PURPLE);
+        this.pauseLabel.setText("Pause");
+    }
+
+    private void setLabelsCenter(){
+        this.gameOverLabel.setAlignment(Pos.CENTER);
+        this.gameOverLabel.setPrefSize(this.gamePane.getWidth(), this.gamePane.getHeight());
+        this.pauseLabel.setAlignment(Pos.CENTER);
+        this.pauseLabel.setPrefSize(this.gamePane.getWidth(), this.gamePane.getHeight());
+    }
     private void startGame(Games game){
-
-        this.currentGame = game.startGame(this.timeline, this.stage, this.gamePane, this.bottomPane);
-        KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) -> {
-            currentGame.updateGame(); this.gameOver();});
+        this.currentGame = game.startGame(this.timeline, this.gamePane, this.bottomPane);
+        KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) ->
+            this.updateGameAndCheckForGameOver());
         this.timeline = new Timeline(kf1);
         this.timeline.setCycleCount(Animation.INDEFINITE);
-        this.timeline.play();
-
+        this.timeline.play();;
         this.root.setCenter(this.gamePane);
         this.root.setBottom(this.bottomPane);
         this.root.setTop(this.topPane);
+        this.stage.sizeToScene();
+        this.setLabelsCenter();
+
+    }
+
+    private void setUpBotPane(){
+        this.bottomPane = new VBox();
+        this.bottomPane.setStyle(Constants.LIGHT_BLUE);
+        this.bottomPane.setAlignment(Pos.CENTER);
+        this.bottomPane.setSpacing(Constants.TEXT_SPACING);
     }
 
     private void setUpTopPane(){
         this.topPane = new HBox();
 
         Button back = new Button("Back");
-        back.setOnAction(Action -> this.back());
+        back.setOnAction(ActionEvent -> this.back());
         back.setFocusTraversable(false);
 
         Button quit = new Button("Quit");
@@ -99,11 +123,13 @@ public class Arcade {
         quit.setFocusTraversable(false);
 
         Button restart = new Button("Restart");
-        restart.setOnAction(Action -> this.restart());
+        restart.setOnAction(ActionEvent -> this.restart());
         restart.setFocusTraversable(false);
 
+        this.topPane.setFocusTraversable(false);
+        this.topPane.setStyle(Constants.LIGHT_BLUE);
         this.topPane.setAlignment(Pos.CENTER);
-        this.topPane.setSpacing(10);
+        this.topPane.setSpacing(Constants.TEXT_SPACING);
         this.topPane.getChildren().addAll(back, quit, restart);
     }
 
@@ -112,66 +138,51 @@ public class Arcade {
         this.timeline.stop();
         this.clearEverything();
         this.root.setCenter(this.middlePane);
+        this.stage.sizeToScene();
     }
 
     private void clearEverything(){
         this.gamePane.getChildren().clear();
         this.bottomPane.getChildren().clear();
-        //not sure why the topPane Buttons are also cleared
         this.root.getChildren().clear();
+    }
+
+    private void updateGameAndCheckForGameOver(){
+        this.currentGame.updateGame();
+        if(this.currentGame.checkForGameOver()){
+            this.timeline.stop();
+            this.gamePane.getChildren().add(this.gameOverLabel);
+        }
     }
 
     private void restart(){
         if(this.currentGame.checkForGameOver()){
-            this.gamePane.getChildren().remove(this.gameOver);
+            this.gamePane.getChildren().remove(this.gameOverLabel);
         }
         if (this.pause == true) {
             this.gamePane.getChildren().remove(pauseLabel);
         }
-        this.timeline.play();
         this.currentGame.restart();
+        this.timeline.play();
     }
-
-    private void gameOver(){
-        if(this.currentGame.checkForGameOver()){
-            this.timeline.stop();
-            this.gamePane.getChildren().add(this.gameOver);
-        }
-    }
-
-    private void setUpGameOverLabel(){
-        this.gameOver = new Label();
-        this.gameOver.setTextFill(Color.RED);
-        this.gameOver.setText("Game Over");
-//        this.gameOver.setLayoutX();
-//        this.gameOver.setLayoutY();
-    }
-
-    private void setUpPauseLabel() {
-        this.pauseLabel = new Label();
-        this.pauseLabel.setTextFill(Color.PURPLE);
-        this.pauseLabel.setText("Pause");
-//        this.pauseLabel.setLayoutX(gamePane.getHeight()/2);
-//        this.pauseLabel.setLayoutY(gamePane.getWidth()/2);
-    }
-
-
 
     public void keyHandler(KeyEvent e) {
         KeyCode keyPressed = e.getCode();
         if(!this.currentGame.checkForGameOver()) {
             if (keyPressed == P) {
+                System.out.println("pause");
                 this.pause = !this.pause;
                 if (this.pause == true) {
                     this.timeline.stop();
                     this.gamePane.getChildren().add(this.pauseLabel);
-                } else {
-                    this.gamePane.getChildren().remove(pauseLabel);
+                }
+                else {
+                    this.gamePane.getChildren().remove(this.pauseLabel);
                     this.timeline.play();
                 }
                 e.consume();
             }
-            if (this.pause == false) {
+            else if (this.pause == false) {
                 this.currentGame.keyHandler(e);
             }
         }

@@ -5,7 +5,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 public class MultiplayerBird extends FlappyBird implements Game {
 
@@ -15,16 +14,20 @@ public class MultiplayerBird extends FlappyBird implements Game {
     private boolean dead2;
     private Pane gamePane;
 
-    public MultiplayerBird(Stage stage, Pane gamePane, VBox bottomPane){
-        super(stage, gamePane, bottomPane);
+    public MultiplayerBird(Pane gamePane, VBox bottomPane){
+        super(gamePane, bottomPane);
+        this.gamePane = gamePane;
         this.setUpLabels();
+        this.setUpBirds();
+        this.dead1 = false;
+        this.dead2 = false;
+
+    }
+
+    public void setUpBirds(){
         this.bird1 = new Bird(gamePane);
         this.bird2 = new Bird(gamePane);
         this.bird2.setColor(Color.PURPLE);
-        this.dead1 = false;
-        this.dead2 = false;
-        this.gamePane = gamePane;
-
     }
 
     @Override
@@ -60,9 +63,7 @@ public class MultiplayerBird extends FlappyBird implements Game {
     public void restart(){
         this.gamePane.getChildren().clear();
         this.reset();
-        this.bird1 = new Bird(gamePane);
-        this.bird2 = new Bird(gamePane);
-        this.bird2.setColor(Color.PURPLE);
+        this.setUpBirds();
         this.dead1 = false;
         this.dead2 = false;
 
@@ -72,7 +73,7 @@ public class MultiplayerBird extends FlappyBird implements Game {
         if(dead1 == false) {
             if (this.bird1.checkIntersection(this.getPipes().get(0).getTopBounds()) ||
                     this.bird1.checkIntersection(this.getPipes().get(0).getBotBounds()) ||
-                    this.bird1.getY() > Constants.STAGE_HEIGHT) {
+                    this.bird1.getY() > Constants.GAMEPANE_HEIGHT) {
                 this.dead1 = true;
                 this.bird1.removeBird();
                 this.bird1 = null;
@@ -81,7 +82,7 @@ public class MultiplayerBird extends FlappyBird implements Game {
         if(dead2 == false) {
             if (this.bird2.checkIntersection(this.getPipes().get(0).getTopBounds()) ||
                     this.bird2.checkIntersection(this.getPipes().get(0).getBotBounds()) ||
-                    this.bird2.getY() > Constants.STAGE_HEIGHT) {
+                    this.bird2.getY() > Constants.GAMEPANE_HEIGHT) {
                 this.dead2 = true;
                 this.bird2.removeBird();
                 this.bird2 = null;

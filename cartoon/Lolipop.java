@@ -49,4 +49,7 @@ public class Lolipop {
         this.stick.setStroke(Color.valueOf(Constants.STICK_COLOR));
     }
 
+    public double getXPos(){
+        return this.lolipop.getLayoutX();
+    }
 }

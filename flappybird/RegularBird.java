@@ -4,14 +4,13 @@ import evolution.Arcade.Game;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class RegularBird extends FlappyBird implements Game {
     private Bird bird;
     private Pane gamePane;
 
-    public RegularBird(Stage stage, Pane gamePane, VBox bottomPane){
-        super(stage, gamePane, bottomPane);
+    public RegularBird(Pane gamePane, VBox bottomPane){
+        super(gamePane, bottomPane);
         this.setUpLabels();
         this.bird = new Bird(gamePane);
         this.gamePane = gamePane;
@@ -34,7 +33,7 @@ public class RegularBird extends FlappyBird implements Game {
 
     @Override
     public boolean checkForGameOver(){
-        if(this.bird.getY() > Constants.STAGE_HEIGHT || this.collisionCheck()){
+        if(this.bird.getY() > Constants.GAMEPANE_HEIGHT || this.collisionCheck()){
             this.bird.removeBird();
             return true;
         }

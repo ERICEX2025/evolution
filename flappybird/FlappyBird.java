@@ -3,7 +3,6 @@ package evolution.flappybird;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class FlappyBird {
@@ -16,10 +15,9 @@ public class FlappyBird {
     private int score;
     private int highScore;
 
-    public FlappyBird(Stage stage, Pane gamePane, VBox bottomPane){
+    public FlappyBird(Pane gamePane, VBox bottomPane){
         this.gamePane = gamePane;
-        this.gamePane.setPrefSize(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
-        stage.sizeToScene();
+        this.gamePane.setPrefSize(Constants.GAMEPANE_WIDTH, Constants.GAMEPANE_HEIGHT);
 
         this.bottomPane = bottomPane;
 
@@ -66,7 +64,7 @@ public class FlappyBird {
 
     public void generatePipes() {
         this.rightMost = this.pipes.get(this.pipes.size()-1);
-        while (this.rightMost.getPosX() < Constants.STAGE_WIDTH) {
+        while (this.rightMost.getPosX() < Constants.GAMEPANE_WIDTH/2) {
             Pipe newPipe = new Pipe(this.rightMost.getPosX() + 250);
             this.gamePane.getChildren().addAll(newPipe.getTopPipe(), newPipe.getBotPipe());
             this.pipes.add(newPipe);

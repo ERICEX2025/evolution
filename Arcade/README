@@ -1,3 +1,7 @@
+TODO:
+fix Cartoon
+
+
 Why does the topPane buttons clear by doing root.clear()
 
 inputs should be normalized to a decimal between 0 and 1 by using a fraction

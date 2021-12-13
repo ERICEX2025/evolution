@@ -40,8 +40,8 @@ public class Rain {
 
     //to move rain
     public void moveRain(){
-        this.rain.setStartY(this.rainStartY += 1);
-        this.rain.setEndY(this.rainEndY += 1);
+        this.rain.setStartY(this.rainStartY += 0.5);
+        this.rain.setEndY(this.rainEndY += 0.5);
     }
 
     /**

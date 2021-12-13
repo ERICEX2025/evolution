@@ -20,8 +20,8 @@ public class Pipe {
                 Constants.PIPE_WIDTH, this.random);
         this.pipeTop.setFill(Color.GREEN);
 
-        this.pipeBot = new Rectangle(this.xPos, this.random + 100, Constants.PIPE_WIDTH,
-                Constants.STAGE_HEIGHT - (this.random + 100));
+        this.pipeBot = new Rectangle(this.xPos, this.random + Constants.PIPE_GAP, Constants.PIPE_WIDTH,
+                Constants.GAMEPANE_HEIGHT - (this.random + Constants.PIPE_GAP));
         this.pipeBot.setFill(Color.GREEN);
     }
 

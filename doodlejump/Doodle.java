@@ -1,13 +1,11 @@
 package evolution.doodlejump;
 
 import javafx.geometry.Bounds;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import org.w3c.dom.css.Rect;
 
 /**
  * composite shape

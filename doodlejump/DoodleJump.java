@@ -1,17 +1,13 @@
 package evolution.doodlejump;
 
 import evolution.Arcade.Game;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -36,13 +32,13 @@ public class DoodleJump implements Game {
      * @param gamePane
      *
      */
-    public DoodleJump(Stage stage, Pane gamePane, VBox bottomPane){
+    public DoodleJump(Pane gamePane, VBox bottomPane){
         this.gamePane = gamePane;
         this.gamePane.setPrefSize(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT);
-        stage.sizeToScene();
+        this.setupBackgroundPic();
         this.counter = new Label();
         bottomPane.getChildren().add(this.counter);
-        this.doodle = new Doodle(gamePane);
+        this.doodle = new Doodle(this.gamePane);
         this.topMost = new Black(Constants.TOPMOST_X, Constants.TOPMOST_Y);
         this.score = 0;
         //adds initial platform and adds to the array and also graphically
@@ -73,7 +69,14 @@ public class DoodleJump implements Game {
 
     @Override
     public void restart(){
-    this.score = 0;
+        this.score = 0;
+        this.gamePane.getChildren().clear();
+        this.setupBackgroundPic();
+        this.doodle = new Doodle(this.gamePane);
+        this.topMost = new Black(Constants.TOPMOST_X, Constants.TOPMOST_Y);
+        this.gamePane.getChildren().add(this.topMost.getPlatform());
+        this.platforms = new ArrayList<>();
+        this.platforms.add(this.topMost);
     }
     /**
      * if platform is blue, make it move
@@ -226,6 +229,16 @@ public class DoodleJump implements Game {
                 break;
         }
         e.consume();
+    }
+
+    private void setupBackgroundPic() {
+        Image image = new Image(this.getClass().getResourceAsStream("violet.jpg"));
+        ImageView iv = new ImageView(image);
+        iv.setFitWidth(Constants.STAGE_WIDTH);
+        iv.setPreserveRatio(true);
+        iv.setSmooth(true);
+        iv.setCache(true);
+        this.gamePane.getChildren().add(iv);
     }
 }
 

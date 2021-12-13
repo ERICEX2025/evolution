@@ -139,6 +139,10 @@ public class Turtle {
         dropShadow2.setOffsetY(30.0);
         this.turtleHead.setEffect(dropShadow2);
     }
+
+    public double getXPos(){
+        return this.turtleHead.getLayoutX();
+    }
 }
 
 

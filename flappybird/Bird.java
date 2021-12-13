@@ -33,9 +33,10 @@ public class Bird {
     public void addGravity(){
         this.velocityY = this.velocityY + Constants.GRAVITY * Constants.DURATION;
         this.positionY = this.positionY + this.velocityY * Constants.DURATION;
-        if(this.positionY < 0){
-            this.positionY = 0;
+        if(this.positionY < Constants.BIRD_RADIUS){
+            this.positionY = Constants.BIRD_RADIUS;
         }
+        System.out.println(this.velocityY);
         this.bird.setCenterY(this.positionY);
         this.eye.setCenterY(this.positionY);
     }
@@ -69,7 +70,7 @@ public class Bird {
     }
 
     public void setOpacity(){
-        this.bird.setOpacity(0.1);
-        this.eye.setOpacity(0.1);
+        this.bird.setOpacity(0.5);
+        this.eye.setOpacity(0.5);
     }
 }

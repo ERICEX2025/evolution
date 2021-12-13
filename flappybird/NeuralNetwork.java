@@ -1,7 +1,5 @@
 package evolution.flappybird;
 
-import java.util.Random;
-
 public class NeuralNetwork {
 
     private double[][] inputNodes;
@@ -22,10 +20,11 @@ public class NeuralNetwork {
     }
 
     public boolean updateInputNodes(double distanceFromPipe, double pipeGapHeight, double velocity){
-        this.distanceFromPipe = distanceFromPipe/Constants.STAGE_WIDTH;
-        this.pipeGapHeight = pipeGapHeight/Constants.STAGE_HEIGHT;
+        this.distanceFromPipe = distanceFromPipe/Constants.GAMEPANE_WIDTH;
+        this.pipeGapHeight = pipeGapHeight/Constants.GAMEPANE_HEIGHT;
         this.velocity = velocity/Constants.MAX_VELOCITY;
-
+        System.out.println("Distance: " + this.distanceFromPipe + "| GapHeight: " + this.pipeGapHeight +
+                "| Velocity: " + this.velocity);
         this.inputNodes = new double[][]{{this.distanceFromPipe}, {this.pipeGapHeight}, {this.velocity}};
 //        System.out.println(inputNodes[1][0]);
         return this.jump();
@@ -106,7 +105,7 @@ public class NeuralNetwork {
 
 
     public boolean jump() {
-        System.out.println(this.forwardPropagation(this.inputNodes));
+//        System.out.println(this.forwardPropagation(this.inputNodes));
         if(this.forwardPropagation(this.inputNodes) > 0.5){
         return true;
         }
