@@ -5,11 +5,14 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
  */
 public class Cartoon implements Game {
 
+    private Timeline timeline;
     private Turtle me;
     private Lolipop lolipop;
     private Pane middlePane;
@@ -43,14 +47,16 @@ public class Cartoon implements Game {
     public Cartoon(Pane middlePane, VBox bottomPane){
         //named me because the turtle is me
         this.middlePane = middlePane;
+        this.middlePane.setPrefSize(Constants.APP_WIDTH, Constants.APP_HEIGHT);
         this.bottomPane = bottomPane;
-        this.setUp();
-    this.me = new Turtle(middlePane);
-    this.lolipop = new Lolipop(middlePane);
-    this.startRain = false;
-    this.directionRight = true;
-    this.rainList = new ArrayList<>();
-    this.counterForArray = 0;
+        this.setUpLabel();
+        this.setUpBackground();
+        this.lolipop = new Lolipop(middlePane);
+        this.me = new Turtle(middlePane);
+        this.startRain = false;
+        this.directionRight = true;
+        this.rainList = new ArrayList<>();
+        this.counterForArray = 0;
 
     }
 
@@ -58,13 +64,15 @@ public class Cartoon implements Game {
      *  sets up and adds label for amount of steps the turtle takes
      *  lets keypressed work in middlePane
      */
-    private void setUp(){
+    private void setUpLabel(){
         this.bottomPane.getChildren().add(stepsLabel = new Label(" 0" + " steps"));
         this.stepsLabel.setFont(Font.font(20));
+    }
+    private void setUpBackground(){
 
         Image image = new Image(this.getClass().getResourceAsStream("VioletScene.jpg"));
         ImageView iv = new ImageView(image);
-        iv.setFitWidth(Constants.APP_WIDTH);
+        iv.setFitWidth(1280);
         iv.setPreserveRatio(true);
         iv.setSmooth(true);
         iv.setCache(true);
@@ -74,37 +82,6 @@ public class Cartoon implements Game {
     /**
      * 4 timelines and their corresponding keyframe
      */
-    private void setupTimeline() {
-
-        //sets turtle to move left or right depending on boolean directionRight which is decided by key inputs
-        KeyFrame turtleStep = new KeyFrame(Duration.seconds(1),
-                (ActionEvent e) -> this.me.move(directionRight));
-        //updates label when Turtle moves
-        KeyFrame stepsLabel = new KeyFrame(Duration.seconds(1),
-                (ActionEvent e) -> this.updateStepsLabel());
-        //creates rain when startRain is true which is decided by space bar
-        KeyFrame createRain = new KeyFrame(Duration.seconds(0.4),
-              (ActionEvent e) -> this.createRain(startRain));
-        //makes the rain on the screen fall
-        KeyFrame makeItRain = new KeyFrame(Duration.seconds(0.005),
-                (ActionEvent e) -> this.makeItRain());
-
-        Timeline timeline = new Timeline(turtleStep);
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
-        Timeline timeline2 = new Timeline(stepsLabel);
-        timeline2.setCycleCount(Animation.INDEFINITE);
-        timeline2.play();
-
-        Timeline timeline3 = new Timeline(createRain);
-        timeline3.setCycleCount(Animation.INDEFINITE);
-        timeline3.play();
-
-        Timeline timeline4 = new Timeline(makeItRain);
-        timeline4.setCycleCount(Animation.INDEFINITE);
-        timeline4.play();
-    }
 
     @Override
     public void updateGame() {
@@ -119,7 +96,7 @@ public class Cartoon implements Game {
 
     @Override
     public boolean checkForGameOver() {
-        if(this.me.getXPos() > this.lolipop.getXPos()){
+        if(this.me.getXPos() > Constants.LOLIPOP_X-30){
             return true;
         }
         return false;
@@ -127,6 +104,13 @@ public class Cartoon implements Game {
 
     @Override
     public void restart() {
+        this.middlePane.getChildren().clear();
+        this.numberOfSteps = 0;
+        this.stepsLabel.setText(" " + this.numberOfSteps + " steps");
+        this.setUpBackground();
+        this.me = new Turtle(middlePane);
+        this.lolipop = new Lolipop(middlePane);
+        this.directionRight = true;
 
     }
 
@@ -152,19 +136,31 @@ public class Cartoon implements Game {
 
     @Override
     public void setTimeline(Timeline timeline) {
-        //creates rain when startRain is true which is decided by space bar
-        KeyFrame createRain = new KeyFrame(Duration.seconds(0.4),
-                (ActionEvent e) -> this.createRain(startRain));
-        //makes the rain on the screen fall
-        KeyFrame makeItRain = new KeyFrame(Duration.seconds(0.005),
-                (ActionEvent e) -> this.makeItRain());
-        Timeline timeline2 = new Timeline(createRain);
-        timeline2.setCycleCount(Animation.INDEFINITE);
-        timeline2.play();
+        this.timeline = timeline;
+        HBox buttonPane = new HBox();
+        buttonPane.setAlignment(Pos.CENTER);
+        Button oneSpeed = new Button();
+        Button twoSpeed = new Button();
+        Button fiveSpeed = new Button();
+        Button max = new Button();
 
-        Timeline timeline3 = new Timeline(makeItRain);
-        timeline3.setCycleCount(Animation.INDEFINITE);
-        timeline3.play();
+        oneSpeed.setText("1x");
+        twoSpeed.setText("2x");
+        fiveSpeed.setText("5x");
+        max.setText("Max");
+
+        oneSpeed.setOnAction(ActionEvent -> this.timeline.setRate(1));
+        oneSpeed.setFocusTraversable(false);
+        twoSpeed.setOnAction(ActionEvent -> this.timeline.setRate(2));
+        twoSpeed.setFocusTraversable(false);
+        fiveSpeed.setOnAction(ActionEvent -> this.timeline.setRate(5));
+        fiveSpeed.setFocusTraversable(false);
+        max.setOnAction(ActionEvent -> this.timeline.setRate(25));
+        max.setFocusTraversable(false);
+
+        buttonPane.getChildren().addAll(oneSpeed,
+                twoSpeed, fiveSpeed, max);
+        this.bottomPane.getChildren().add(buttonPane);
     }
 
     /**

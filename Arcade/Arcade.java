@@ -136,6 +136,7 @@ public class Arcade {
     }
 
     private void back(){
+        this.pause = false;
         this.currentGame = null;
         this.timeline.stop();
         this.clearEverything();

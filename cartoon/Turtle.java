@@ -70,7 +70,7 @@ public class Turtle {
      * if turtle is at the borders, dont move and set movement to false
      */
     public void move(boolean rightDirection) {
-        if(rightDirection == true && this.turtleShell.getLayoutX() < Constants.APP_WIDTH - 148){
+        if(rightDirection == true && this.turtleShell.getLayoutX() < Constants.APP_WIDTH){
             this.movement = true;
             //sets/moves shell by the changed amount therefore moving all of its other parts by the same amount
             this.setXLoc(this.turtleShell.getLayoutX() + Constants.DISTANCE_X);
@@ -89,6 +89,7 @@ public class Turtle {
     public boolean getMovement(){
         return this.movement;
     }
+
 
     /**
      * sets x location of turtleShell and its body parts relative to the shell
@@ -141,7 +142,7 @@ public class Turtle {
     }
 
     public double getXPos(){
-        return this.turtleHead.getLayoutX();
+        return this.turtleHead.getCenterX();
     }
 }
 

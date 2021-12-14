@@ -1,10 +1,10 @@
 package evolution.cartoon;
 
 public class Constants {
-    public static final double APP_WIDTH = 1280;
-    public static final double APP_HEIGHT = 720;
+    public static final double APP_WIDTH = 350;
+    public static final double APP_HEIGHT = 500;
 
-    public static final double LOLIPOP_X = 1240;
+    public static final double LOLIPOP_X = 320;
     public static final double LOLIPOP_Y = 380;
     public static final double LOLIPOP_RADIUS = 15;
     public static final String LOLIPOP_COLOR = "#99CCFF";

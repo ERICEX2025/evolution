@@ -18,7 +18,10 @@ public class SmartBird extends FlappyBird implements Game {
 
     private Timeline timeline;
     private ArrayList<BirdsThatLearn> birds;
+    private ArrayList<BirdsThatLearn> selectedFittestBirds;
     private BirdsThatLearn[] fitness;
+    private BirdsThatLearn birdToBePassed;
+
     private double distanceFromPipe;
     private double distanceFromGapHeight;
     private Pane gamePane;
@@ -60,15 +63,50 @@ public class SmartBird extends FlappyBird implements Game {
         }
     }
 
-    private void createNextGenBirds(){
-        for (int i = 0; i < 50; i++) {
-            BirdsThatLearn bird = new BirdsThatLearn(this.gamePane);
 
-            bird.setColor(this.createRandomColor());
-            bird.setOpacity();
-            this.fitness[i] = bird;
-            this.birds.add(bird);
+    private void createNextGenBirds() {
+        if (this.selectedFittestBirds.size() > 0) {
+            for (int i = 0; i < this.selectedFittestBirds.size(); i++) {
+                this.birdToBePassed = this.selectedFittestBirds.get(i);
+                if (this.selectedFittestBirds.get(i).getFitness() > this.birdToBePassed.getFitness()) {
+                    this.birdToBePassed = this.selectedFittestBirds.get(i);
+                }
+            }
+            for (int i = 0; i < 17; i++) {
+                BirdsThatLearn bird = new BirdsThatLearn(this.birdToBePassed.getNeuralNetwork().getSyn0(),
+                        this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
 
+                bird.setColor(this.createRandomColor());
+                bird.setOpacity();
+                this.fitness[i] = bird;
+                this.birds.add(bird);
+            }
+
+            if (this.selectedFittestBirds.size() > 0){
+
+
+            }
+
+            for (int i = 0; i < 17; i++) {
+                BirdsThatLearn bird = new BirdsThatLearn(this.birdToBePassed.getNeuralNetwork().getSyn0(),
+                         this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
+
+                bird.setColor(this.createRandomColor());
+                bird.setOpacity();
+                this.fitness[i] = bird;
+                this.birds.add(bird);
+            }
+            for (int i = 0; i < 16; i++) {
+                BirdsThatLearn bird = new BirdsThatLearn(this.birdToBePassed.getNeuralNetwork().getSyn0(),
+                         this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
+                bird.setColor(this.createRandomColor());
+                bird.setOpacity();
+                this.fitness[i] = bird;
+                this.birds.add(bird);
+            }
+        }
+        else{
+            this.create50RandomBirds();
         }
     }
 
@@ -193,16 +231,16 @@ public class SmartBird extends FlappyBird implements Game {
     public void keyHandler(KeyEvent e) {
     }
 
+    private void setFittestBirds(){
+        for (int i = 0; i < 3; i++) {
+            if(this.birds.get(i).getY()!=10) {
+                this.selectedFittestBirds.add(this.birds.get(i));
+            }
+        }
+
+    }
+
     public void collisionCheck() {
-//        if(this.birds.size() < 5){
-//            if(this.birds.get(0).getX() > this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH){
-//                for(Bird bird : this.topFive){
-//                    if(this.score > 0){
-//
-//                    }
-//                }
-//            }
-//        }
         if(this.birds.size() > 0) {
             for(int i = 0; i < this.birds.size(); i++) {
                 if (this.birds.get(i).checkIntersection(this.getPipes().get(0).getTopBounds()) ||
@@ -213,6 +251,9 @@ public class SmartBird extends FlappyBird implements Game {
                     this.birds.remove(this.birds.get(i));
                     this.aliveCounter--;
                     this.aliveLabel.setText("Alive: " + this.aliveCounter);
+                    if(aliveCounter == 3){
+                        this.setFittestBirds();
+                    }
                     i--;
                 }
             }

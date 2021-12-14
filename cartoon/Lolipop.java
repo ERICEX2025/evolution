@@ -50,6 +50,6 @@ public class Lolipop {
     }
 
     public double getXPos(){
-        return this.lolipop.getLayoutX();
+        return this.lolipop.getCenterX();
     }
 }
