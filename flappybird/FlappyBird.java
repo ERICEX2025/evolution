@@ -42,14 +42,17 @@ public class FlappyBird {
         return pipes;
     }
 
-    public void reset(){
+    public void resetScore(){
         this.score = 0;
         this.scoreLabel.setText("Score: " + this.score);
+
+    }
+
+    public void resetPipes(){
         this.pipes = new ArrayList<>();
         this.rightMost = new Pipe(Constants.PIPE_INITIAL_X);
         this.pipes.add(this.rightMost);
         this.gamePane.getChildren().addAll(this.rightMost.getTopPipe(), this.rightMost.getBotPipe());
-
     }
 
 

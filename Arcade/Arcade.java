@@ -90,10 +90,11 @@ public class Arcade {
         this.pauseLabel.setPrefSize(this.gamePane.getWidth(), this.gamePane.getHeight());
     }
     private void startGame(Games game){
-        this.currentGame = game.startGame(this.timeline, this.gamePane, this.bottomPane);
+        this.currentGame = game.startGame(this.gamePane, this.bottomPane);
         KeyFrame kf1 = new KeyFrame(Duration.seconds(this.currentGame.setDuration()), (ActionEvent e) ->
             this.updateGameAndCheckForGameOver());
         this.timeline = new Timeline(kf1);
+        this.currentGame.setTimeline(this.timeline);
         this.timeline.setCycleCount(Animation.INDEFINITE);
         this.timeline.play();
         this.root.setCenter(this.gamePane);
@@ -171,7 +172,6 @@ public class Arcade {
         KeyCode keyPressed = e.getCode();
         if(!this.currentGame.checkForGameOver()) {
             if (keyPressed == P) {
-                System.out.println("pause");
                 this.pause = !this.pause;
                 if (this.pause == true) {
                     this.timeline.stop();

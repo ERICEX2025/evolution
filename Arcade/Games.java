@@ -35,7 +35,7 @@ public enum Games {
                 return null;
         }
     }
-    public Game startGame(Timeline timeline, Pane gamePane, VBox bottomPane){
+    public Game startGame(Pane gamePane, VBox bottomPane){
         switch (this) {
             case FLAPPYBIRD:
                 RegularBird flappyGame = new RegularBird(gamePane, bottomPane);
@@ -46,7 +46,7 @@ public enum Games {
                 return multiFlap;
 
             case SMARTFLAPPYBIRD:
-                SmartBird smartFlap = new SmartBird(timeline, gamePane, bottomPane);
+                SmartBird smartFlap = new SmartBird(gamePane, bottomPane);
                 return smartFlap;
 
             case DOODLEJUMP:

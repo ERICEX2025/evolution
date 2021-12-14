@@ -22,7 +22,7 @@ public class BirdsThatLearn extends Bird{
         return this.NeuralNetwork;
     }
 
-    public void addFitness(int fitness){
+    public void addFitness(){
         this.fitness++;
     }
 

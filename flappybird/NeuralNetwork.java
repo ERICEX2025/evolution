@@ -20,11 +20,14 @@ public class NeuralNetwork {
     }
 
     public boolean updateInputNodes(double distanceFromPipe, double distanceFromPipeGapHeight, double velocity){
-        this.distanceFromPipe = distanceFromPipe/Constants.DISTANCE_BETWEEN_PIPES;
-        this.distanceFromPipeGapHeight = ((distanceFromPipeGapHeight/(Constants.GAMEPANE_HEIGHT-50)) + 1)/2 ;
-        this.velocity = (velocity + 334/Constants.VELOCITY_NORMALIZER);
-        System.out.println("Distance: " + this.distanceFromPipe + "| GapHeight: " + this.distanceFromPipeGapHeight +
-                "| Velocity: " + this.velocity);
+        this.distanceFromPipe = distanceFromPipe/Constants.GAMEPANE_WIDTH;
+        this.distanceFromPipeGapHeight = distanceFromPipeGapHeight/Constants.GAMEPANE_HEIGHT;
+        this.velocity = velocity/Constants.VELOCITY_NORMALIZER;
+//        this.distanceFromPipe = distanceFromPipe/Constants.DISTANCE_BETWEEN_PIPES;
+//        this.distanceFromPipeGapHeight = ((distanceFromPipeGapHeight/(Constants.GAMEPANE_HEIGHT-50)) + 1)/2 ;
+//        this.velocity = (velocity + 334/Constants.VELOCITY_NORMALIZER);
+//        System.out.println("Distance: " + this.distanceFromPipe + "| GapHeight: " + this.distanceFromPipeGapHeight +
+//                "| Velocity: " + this.velocity);
         this.inputNodes = new double[][]{{this.distanceFromPipe}, {this.distanceFromPipeGapHeight}, {this.velocity}};
         return this.jump();
     }

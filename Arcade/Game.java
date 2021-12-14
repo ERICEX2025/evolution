@@ -1,5 +1,6 @@
 package evolution.Arcade;
 
+import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 
 public interface Game {
@@ -15,5 +16,7 @@ public interface Game {
     void restart();
 
     void keyHandler(KeyEvent e);
+
+    void setTimeline(Timeline timeline);
 
 }

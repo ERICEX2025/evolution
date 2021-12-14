@@ -110,19 +110,6 @@ public class Cartoon implements Game {
     public void updateGame() {
         this.me.move(directionRight);
         this.updateStepsLabel();
-        this.createRainAndMakeItRainAtNormalSpeed();
-    }
-
-    private void createRainAndMakeItRainAtNormalSpeed(){
-        this.createRain(startRain);
-//        for(int i = 0; i < 3; i++) {
-//            this.createRain(startRain);
-//            System.out.println("hi");
-//        }
-        for(int i = 0; i < 500; i++) {
-            this.makeItRain();
-        }
-//        this.makeItRain();
     }
 
     @Override
@@ -161,6 +148,23 @@ public class Cartoon implements Game {
         }
 
         e.consume();
+    }
+
+    @Override
+    public void setTimeline(Timeline timeline) {
+        //creates rain when startRain is true which is decided by space bar
+        KeyFrame createRain = new KeyFrame(Duration.seconds(0.4),
+                (ActionEvent e) -> this.createRain(startRain));
+        //makes the rain on the screen fall
+        KeyFrame makeItRain = new KeyFrame(Duration.seconds(0.005),
+                (ActionEvent e) -> this.makeItRain());
+        Timeline timeline2 = new Timeline(createRain);
+        timeline2.setCycleCount(Animation.INDEFINITE);
+        timeline2.play();
+
+        Timeline timeline3 = new Timeline(makeItRain);
+        timeline3.setCycleCount(Animation.INDEFINITE);
+        timeline3.play();
     }
 
     /**

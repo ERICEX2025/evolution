@@ -1,6 +1,7 @@
 package evolution.flappybird;
 
 import evolution.Arcade.Game;
+import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -64,7 +65,8 @@ public class MultiplayerBird extends FlappyBird implements Game {
     @Override
     public void restart(){
         this.gamePane.getChildren().clear();
-        this.reset();
+        this.resetScore();
+        this.resetPipes();
         this.setUpBirds();
         this.dead1 = false;
         this.dead2 = false;
@@ -122,5 +124,10 @@ public class MultiplayerBird extends FlappyBird implements Game {
                 break;
         }
         e.consume();
+    }
+
+    @Override
+    public void setTimeline(Timeline timeline) {
+
     }
 }

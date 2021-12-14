@@ -1,6 +1,7 @@
 package evolution.flappybird;
 
 import evolution.Arcade.Game;
+import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -43,7 +44,8 @@ public class RegularBird extends FlappyBird implements Game {
     @Override
     public void restart(){
         this.gamePane.getChildren().clear();
-        this.reset();
+        this.resetScore();
+        this.resetPipes();
         this.bird = new Bird(gamePane);
     }
 
@@ -57,6 +59,11 @@ public class RegularBird extends FlappyBird implements Game {
                 break;
         }
         e.consume();
+    }
+
+    @Override
+    public void setTimeline(Timeline timeline) {
+
     }
 
     public boolean collisionCheck(){

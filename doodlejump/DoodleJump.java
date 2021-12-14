@@ -1,6 +1,7 @@
 package evolution.doodlejump;
 
 import evolution.Arcade.Game;
+import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -229,6 +230,11 @@ public class DoodleJump implements Game {
                 break;
         }
         e.consume();
+    }
+
+    @Override
+    public void setTimeline(Timeline timeline) {
+
     }
 
     private void setupBackgroundPic() {
