@@ -15,10 +15,29 @@ public class NeuralNetwork {
     }
 
     public NeuralNetwork(double[][] syn0, double[][] syn1){
-        this.syn0 = syn0;
-        this.syn1 = syn1;
+        this.setSyn0(syn0);
+        this.setSyn1(syn1);
         this.mutate();
     }
+
+    private void setSyn0(double[][] syn0) {
+        this.syn0 = new double[2][3];
+        for (int r = 0; r < this.syn0.length; r++) {
+            for (int c = 0; c < this.syn0[0].length; c++) {
+                this.syn0[r][c] = syn0[r][c];
+            }
+        }
+    }
+
+    private void setSyn1(double[][] syn1) {
+        this.syn1 = new double[1][2];
+        for (int r = 0; r < this.syn1.length; r++) {
+            for (int c = 0; c < this.syn1[0].length; c++) {
+                this.syn1[r][c] = syn1[r][c];
+            }
+        }
+    }
+
 
     private void mutate(){
 
