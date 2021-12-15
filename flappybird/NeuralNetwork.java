@@ -17,6 +17,27 @@ public class NeuralNetwork {
     public NeuralNetwork(double[][] syn0, double[][] syn1){
         this.syn0 = syn0;
         this.syn1 = syn1;
+        this.mutate();
+    }
+
+    private void mutate(){
+
+        for(int r = 0; r < this.syn0.length; r++){
+            for(int c = 0; c < this.syn0[0].length; c++) {
+                if(Math.random() > Constants.MUTATION_RATE) {
+                    this.syn0[r][c] = (Math.random() * 2) - 1;
+                }
+            }
+        }
+
+        for(int r = 0; r < this.syn1.length; r++){
+            for(int c = 0; c < this.syn1[0].length; c++) {
+                if(Math.random() > Constants.MUTATION_RATE) {
+                    this.syn1[r][c] = (Math.random() * 2) - 1;
+                }
+            }
+        }
+
     }
 
     public boolean updateInputNodes(double distanceFromPipe, double distanceFromPipeGapHeight, double velocity){

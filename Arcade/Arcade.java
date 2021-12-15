@@ -151,11 +151,11 @@ public class Arcade {
     }
 
     private void updateGameAndCheckForGameOver(){
-        this.currentGame.updateGame();
         if(this.currentGame.checkForGameOver()){
             this.timeline.stop();
             this.gamePane.getChildren().add(this.gameOverLabel);
         }
+        this.currentGame.updateGame();
     }
 
     private void restart(){
