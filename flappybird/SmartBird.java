@@ -9,7 +9,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -51,82 +50,70 @@ public class SmartBird extends FlappyBird implements Game {
 
     private void create50RandomBirds() {
         for (int i = 0; i < 50; i++) {
-            BirdsThatLearn bird = new BirdsThatLearn(this.gamePane);
-
-            bird.setColor(this.createRandomColor());
-            bird.setOpacity();
-            this.birds.add(bird);
+            this.birds.add(new BirdsThatLearn(this.gamePane));
         }
     }
 
     private void createNextGenBirds() {
         boolean passFirstPipe = false;
-        for(BirdsThatLearn Bird: this.fitnessArray){
-            if(Bird.getFitness()>290){
+        for (BirdsThatLearn Bird : this.fitnessArray) {
+            if (Bird.getFitness() > 290) {
                 passFirstPipe = true;
             }
 
         }
-       if(passFirstPipe) {
-           BirdsThatLearn birdToBePassed = this.fitnessArray.get(0);
-           int index = 0;
-           for (int i = 0; i < this.fitnessArray.size(); i++) {
-               if (this.fitnessArray.get(i).getFitness() > birdToBePassed.getFitness()) {
-                   birdToBePassed = this.fitnessArray.get(i);
-                   index = i;
-               }
-           }
-           for (int i = 0; i < 17; i++) {
-               BirdsThatLearn bird = new BirdsThatLearn(birdToBePassed.getNeuralNetwork().getSyn0(),
-                       birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
+        if (passFirstPipe) {
 
-               bird.setColor(this.createRandomColor());
-               bird.setOpacity();
-               this.birds.add(bird);
-           }
-           this.fitnessArray.remove(index);
+            //BEST BIRD
+            BirdsThatLearn birdToBePassed = this.fitnessArray.get(0);
+            int index = 0;
+            for (int i = 0; i < this.fitnessArray.size(); i++) {
+                if (this.fitnessArray.get(i).getFitness() > birdToBePassed.getFitness()) {
+                    birdToBePassed = this.fitnessArray.get(i);
+                    index = i;
+                }
+            }
+            for (int i = 0; i < 17; i++) {
+                this.birds.add(new BirdsThatLearn(birdToBePassed.getNeuralNetwork().getSyn0(),
+                        birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane));
+            }
+            this.fitnessArray.remove(index);
 
-           //SECOND BIRD
-           BirdsThatLearn birdToBePassed2 = this.fitnessArray.get(0);
-           int index2 = 0;
-           for (int i = 0; i < this.fitnessArray.size(); i++) {
-               if (this.fitnessArray.get(i).getFitness() > birdToBePassed2.getFitness()) {
-                   birdToBePassed2 = this.fitnessArray.get(i);
-                   index2 = i;
-               }
-           }
-           for (int i = 0; i < 17; i++) {
-               BirdsThatLearn bird = new BirdsThatLearn(birdToBePassed2.getNeuralNetwork().getSyn0(),
-                       birdToBePassed2.getNeuralNetwork().getSyn1(), this.gamePane);
+            //SECOND BEST BIRD
+            BirdsThatLearn birdToBePassed2 = this.fitnessArray.get(0);
+            int index2 = 0;
+            for (int i = 0; i < this.fitnessArray.size(); i++) {
+                if (this.fitnessArray.get(i).getFitness() > birdToBePassed2.getFitness()) {
+                    birdToBePassed2 = this.fitnessArray.get(i);
+                    index2 = i;
+                }
+            }
+            for (int i = 0; i < 17; i++) {
+                this.birds.add(new BirdsThatLearn(birdToBePassed2.getNeuralNetwork().getSyn0(),
+                        birdToBePassed2.getNeuralNetwork().getSyn1(), this.gamePane));
+            }
+            this.fitnessArray.remove(index2);
 
-               bird.setColor(this.createRandomColor());
-               bird.setOpacity();
-               this.birds.add(bird);
-           }
-           this.fitnessArray.remove(index2);
 
-           //Third BIRD
-           BirdsThatLearn birdToBePassed3 = this.fitnessArray.get(0);
-           int index3 = 0;
-           for (int i = 0; i < this.fitnessArray.size(); i++) {
-               if (this.fitnessArray.get(i).getFitness() > birdToBePassed3.getFitness()) {
-                   birdToBePassed3 = this.fitnessArray.get(i);
-                   index3 = i;
-               }
-           }
-           for (int i = 0; i < 16; i++) {
-               BirdsThatLearn bird = new BirdsThatLearn(birdToBePassed3.getNeuralNetwork().getSyn0(),
-                       birdToBePassed3.getNeuralNetwork().getSyn1(), this.gamePane);
+            //THIRD BEST BIRD
+            BirdsThatLearn birdToBePassed3 = this.fitnessArray.get(0);
+            int index3 = 0;
+            for (int i = 0; i < this.fitnessArray.size(); i++) {
+                if (this.fitnessArray.get(i).getFitness() > birdToBePassed3.getFitness()) {
+                    birdToBePassed3 = this.fitnessArray.get(i);
+                    index3 = i;
+                }
+            }
+            for (int i = 0; i < 16; i++) {
+                this.birds.add( new BirdsThatLearn(birdToBePassed3.getNeuralNetwork().getSyn0(),
+                        birdToBePassed3.getNeuralNetwork().getSyn1(), this.gamePane));
+            }
+            this.fitnessArray.remove(index3);
+        }
 
-               bird.setColor(this.createRandomColor());
-               bird.setOpacity();
-               this.birds.add(bird);
-           }
-           this.fitnessArray.remove(index3);
-       }
-       else{
-           this.create50RandomBirds();
-       }
+        else {
+            this.create50RandomBirds();
+        }
     }
 
 
@@ -134,7 +121,9 @@ public class SmartBird extends FlappyBird implements Game {
     public void updateGame() {
         for (BirdsThatLearn Bird : this.birds) {
             Bird.addGravity();
+            Bird.addFitness();
         }
+        this.updateFitness();
 
         this.movePipes();
         this.generatePipes();
@@ -143,20 +132,16 @@ public class SmartBird extends FlappyBird implements Game {
         this.updateNeuralNetworkForBirds();
         this.collisionCheck();
         this.addPointsIfNearPipeYPos();
-        this.updateFitness();
 
     }
 
     private void updateFitness() {
-        for (BirdsThatLearn Bird : this.birds) {
-            Bird.addFitness();
-        }
         this.currentFitnessCounter = this.birds.get(0).getFitness();
         this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
-            if (this.currentFitnessCounter > this.bestAllTimeFitness) {
-                this.bestAllTimeFitness = this.currentFitnessCounter;
-                this.bestAllTimeFitnessLabel.setText("BestAllTimeFitness: " + this.bestAllTimeFitness);
-            }
+        if (this.currentFitnessCounter > this.bestAllTimeFitness) {
+            this.bestAllTimeFitness = this.currentFitnessCounter;
+            this.bestAllTimeFitnessLabel.setText("BestAllTimeFitness: " + this.bestAllTimeFitness);
+        }
 
     }
 
@@ -164,7 +149,7 @@ public class SmartBird extends FlappyBird implements Game {
         if (this.birds.size() > 0) {
             for (int i = 0; i < this.birds.size(); i++) {
                 if (Math.abs(this.getPipes().get(0).getGapHeight() - this.birds.get(i).getY()) < 40) {
-                        this.birds.get(i).addFitness();
+                    this.birds.get(i).addFitness();
                 }
             }
         }
@@ -217,7 +202,6 @@ public class SmartBird extends FlappyBird implements Game {
     public void updateNeuralNetworkForBirds() {
         this.setDistanceFromNextPipe();
         for (BirdsThatLearn Bird : this.birds) {
-
             if (this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH - this.birds.get(0).getX() < 0) {
                 this.distanceFromGapHeight = this.getPipes().get(1).getGapHeight() - Bird.getY();
             } else {
@@ -240,29 +224,29 @@ public class SmartBird extends FlappyBird implements Game {
     }
 
     @Override
-    public double setDuration() {
-        return Constants.DURATION;
+    public void restart() {
+        this.gamePane.getChildren().clear();
+        this.birds = new ArrayList<>();
+        this.fitnessArray = new ArrayList<>();
+        this.resetPipes();
+        this.bottomPane.getChildren().clear();
+        this.setUpBottomPane();
+        this.create50RandomBirds();
     }
 
     @Override
     public boolean checkForGameOver() {
 
-            if (this.currentFitnessCounter == 10000) {
-                return true;
-            }
+        if (this.currentFitnessCounter == 20000) {
+            return true;
+        }
 
         return false;
     }
 
     @Override
-    public void restart() {
-        this.gamePane.getChildren().clear();
-        this.bottomPane.getChildren().clear();
-        this.resetPipes();
-        this.setUpBottomPane();
-        this.birds = new ArrayList<>();
-        this.fitnessArray = new ArrayList<>();
-        this.create50RandomBirds();
+    public double setDuration() {
+        return Constants.DURATION;
     }
 
     @Override
@@ -274,8 +258,7 @@ public class SmartBird extends FlappyBird implements Game {
         this.timeline = timeline;
     }
 
-
-    public void setUpBottomPane() {
+    private void setUpBottomPane() {
         this.aliveLabel = new Label();
         this.generationLabel = new Label();
         this.currentFitnessLabel = new Label();
@@ -283,8 +266,31 @@ public class SmartBird extends FlappyBird implements Game {
         this.bestFitnessLastGenLabel = new Label();
         this.bestAllTimeFitnessLabel = new Label();
 
-        this.setDefaultLabels();
+        this.setDefaultValues();
 
+        this.bottomPane.getChildren().addAll(this.aliveLabel, this.generationLabel, this.currentFitnessLabel
+                , this.avgFitnessLastGenLabel, this.bestFitnessLastGenLabel, this.bestAllTimeFitnessLabel);
+
+        this.createTimeLineButtons();
+    }
+
+    private void setDefaultValues() {
+        this.aliveCounter = 50;
+        this.generationCounter = 0;
+        this.currentFitnessCounter = 0;
+        this.avgFitnessLastGen = 0;
+        this.bestFitnessLastGen = 0;
+        this.bestAllTimeFitness = 0;
+        this.aliveLabel.setText("Alive: " + this.aliveCounter);
+        this.generationLabel.setText("Generation: " + this.generationCounter);
+        this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
+        this.avgFitnessLastGenLabel.setText("AvgFitnessLastGen: " + this.avgFitnessLastGen);
+        this.bestFitnessLastGenLabel.setText("BestFitnessLastGen: " + this.bestFitnessLastGen);
+        this.bestAllTimeFitnessLabel.setText("BestAllTimeFitness: " + this.bestAllTimeFitness);
+
+    }
+
+    private void createTimeLineButtons(){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         Button oneSpeed = new Button();
@@ -308,168 +314,6 @@ public class SmartBird extends FlappyBird implements Game {
 
         buttonPane.getChildren().addAll(oneSpeed,
                 twoSpeed, fiveSpeed, max);
-
-        this.bottomPane.getChildren().addAll(this.aliveLabel, this.generationLabel, this.currentFitnessLabel
-                , this.avgFitnessLastGenLabel, this.bestFitnessLastGenLabel, this.bestAllTimeFitnessLabel,
-                buttonPane);
+        this.bottomPane.getChildren().add(buttonPane);
     }
-
-    private void setDefaultLabels() {
-        this.aliveCounter = 50;
-        this.generationCounter = 0;
-        this.currentFitnessCounter = 0;
-        this.avgFitnessLastGen = 0;
-        this.bestFitnessLastGen = 0;
-        this.bestAllTimeFitness = 0;
-        this.aliveLabel.setText("Alive: " + this.aliveCounter);
-        this.generationLabel.setText("Generation: " + this.generationCounter);
-        this.currentFitnessLabel.setText("CurrentFitness: " + this.currentFitnessCounter);
-        this.avgFitnessLastGenLabel.setText("AvgFitnessLastGen: " + this.avgFitnessLastGen);
-        this.bestFitnessLastGenLabel.setText("BestFitnessLastGen: " + this.bestFitnessLastGen);
-        this.bestAllTimeFitnessLabel.setText("BestAllTimeFitness: " + this.bestAllTimeFitness);
-
-    }
-
-    private Color createRandomColor() {
-        int red = (int) (Math.random() * 256);
-        int green = (int) (Math.random() * 256);
-        int blue = (int) (Math.random() * 256);
-        return Color.rgb(red, green, blue);
-    }
-
-//    private void createNextGenBirds() {
-////        System.out.println(this.selectedFittestBirds.size());
-//        if (this.selectedFittestBirds.size() > 0) {
-//            int o = 0;
-//            for (int i = 0; i < this.selectedFittestBirds.size(); i++) {
-//                this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                if (this.selectedFittestBirds.get(i).getFitness() > this.birdToBePassed.getFitness()) {
-//                    this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                    o = i;
-//                }
-//            }
-//            this.selectedFittestBirds.remove(o);
-//
-//            for (int i = 0; i < 17; i++) {
-//                BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen,this.birdToBePassed.getNeuralNetwork().getSyn0(),
-//                        this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
-//
-//                bird.setColor(this.createRandomColor());
-//                bird.setOpacity();
-//                this.fitness.add(bird);
-//                this.birds.add(bird);
-//            }
-//
-//            if (this.selectedFittestBirds.size() > 0) {
-//                o = 0;
-//                for (int i = 0; i < this.selectedFittestBirds.size(); i++) {
-//                    this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                    if (this.selectedFittestBirds.get(i).getFitness() > this.birdToBePassed.getFitness()) {
-//                        this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                        o = i;
-//                    }
-//
-//                }
-//                this.selectedFittestBirds.remove(o);
-//            }
-//
-//
-//            for (int i = 0; i < 17; i++) {
-//                BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen, this.birdToBePassed.getNeuralNetwork().getSyn0(),
-//                         this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
-//
-//                bird.setColor(this.createRandomColor());
-//                bird.setOpacity();
-//                this.fitness.add(bird);
-//                this.birds.add(bird);
-//            }
-//
-//            if (this.selectedFittestBirds.size() > 0) {
-//                o = 0;
-//                for (int i = 0; i < this.selectedFittestBirds.size(); i++) {
-//                    this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                    if (this.selectedFittestBirds.get(i).getFitness() > this.birdToBePassed.getFitness()) {
-//                        this.birdToBePassed = this.selectedFittestBirds.get(i);
-//                        o = i;
-//                    }
-//
-//                }
-//                this.selectedFittestBirds.remove(o);
-//            }
-//
-//            for (int i = 0; i < 16; i++) {
-//                BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen, this.birdToBePassed.getNeuralNetwork().getSyn0(),
-//                         this.birdToBePassed.getNeuralNetwork().getSyn1(), this.gamePane);
-//                bird.setColor(this.createRandomColor());
-//                bird.setOpacity();
-//                this.fitness.add(bird);
-//                this.birds.add(bird);
-//            }
-//        }
-//        else{
-//            this.create50RandomBirds();
-//        }
-//    }
-
-//    private void createNextGenBirds() {
-//        BirdsThatLearn birdToBePassed = this.fitnessArray.get(0);
-//        int arrayi = 0;
-//        for(int i = 0; i < this.fitnessArray.size(); i++){
-//            if(this.fitnessArray.get(i).getFitness() > birdToBePassed.getFitness()) {
-//                if(this.fitnessArray.get(i).getY() != 10) {
-//                    birdToBePassed = this.fitnessArray.get(i);
-//                    arrayi = i;
-//                }
-//            }
-//        }
-//        if(birdToBePassed.)
-
-//       this.getTop3Fitness();
-//        for (int i = 0; i < 17; i++) {
-//                BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen,this.selectedFittestBirds.get(0).
-//                        getNeuralNetwork().getSyn0(),
-//                        this.selectedFittestBirds.get(0).getNeuralNetwork().getSyn1(), this.gamePane);
-//
-//                bird.setColor(this.createRandomColor());
-//                bird.setOpacity();
-//                this.fitnessArray.add(bird);
-//                this.birds.add(bird);
-//            }
-//        for (int i = 0; i < 17; i++) {
-//            BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen,this.selectedFittestBirds.get(1).
-//                    getNeuralNetwork().getSyn0(),
-//                    this.selectedFittestBirds.get(1).getNeuralNetwork().getSyn1(), this.gamePane);
-//
-//            bird.setColor(this.createRandomColor());
-//            bird.setOpacity();
-//            this.fitnessArray.add(bird);
-//            this.birds.add(bird);
-//        }
-//        for (int i = 0; i < 16; i++) {
-//            BirdsThatLearn bird = new BirdsThatLearn(this.avgFitnessLastGen,this.selectedFittestBirds.get(2).
-//                    getNeuralNetwork().getSyn0(),
-//                    this.selectedFittestBirds.get(2).getNeuralNetwork().getSyn1(), this.gamePane);
-//
-//            bird.setColor(this.createRandomColor());
-//            bird.setOpacity();
-//            this.fitnessArray.add(bird);
-//            this.birds.add(bird);
-//        }
-//
-//    }
-//
-//    private void getTop3Fitness(){
-//        for(int ii = 0; ii < 3; ii++) {
-//            BirdsThatLearn birdToBePassed = this.fitnessArray.get(0);
-//            for (int i = 0; i < this.fitnessArray.size(); i++) {
-//                if (this.fitnessArray.get(i).getFitness() > birdToBePassed.getFitness()) {
-//                    birdToBePassed = this.fitnessArray.get(i);
-//                    this.fitnessArray.remove(i);
-//                    i--;
-//                }
-//            }
-//            this.selectedFittestBirds.add(birdToBePassed);
-//        }
-//    }
-
 }

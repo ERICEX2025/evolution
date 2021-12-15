@@ -68,6 +68,7 @@ public class Arcade {
         this.middlePane.setPrefSize(Constants.ARCADE_WIDTH, Constants.ARCADE_HEIGHT);
         this.middlePane.setAlignment(Pos.CENTER);
         this.middlePane.setSpacing(Constants.TEXT_SPACING);
+        this.middlePane.setStyle(Constants.LIGHT_BLUE);
         this.root.setCenter(this.middlePane);
     }
 
@@ -155,7 +156,9 @@ public class Arcade {
             this.timeline.stop();
             this.gamePane.getChildren().add(this.gameOverLabel);
         }
-        this.currentGame.updateGame();
+        else {
+            this.currentGame.updateGame();
+        }
     }
 
     private void restart(){
@@ -165,7 +168,9 @@ public class Arcade {
         if (this.pause == true) {
             this.gamePane.getChildren().remove(pauseLabel);
         }
+
         this.currentGame.restart();
+        this.timeline.setRate(1);
         this.timeline.play();
     }
 

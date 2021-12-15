@@ -30,7 +30,7 @@ public class Pipe {
     }
 
     public int getGapHeight(){
-        return this.random;
+        return (this.random + Constants.PIPE_GAP/2);
     }
 
     public Rectangle getTopPipe(){

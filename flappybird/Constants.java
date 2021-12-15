@@ -7,8 +7,8 @@ public class Constants {
     public static final int GAMEPANE_HEIGHT = 500;
 
     public static final int PIPE_GAP_POSITION_MAX = GAMEPANE_HEIGHT -450;
-    public static final int PIPE_GAP_POSITION_MIN = GAMEPANE_HEIGHT -150;
-    public static final int PIPE_GAP = 100;
+    public static final int PIPE_GAP_POSITION_MIN = GAMEPANE_HEIGHT -170;
+    public static final int PIPE_GAP = 120;
 
     public static final int BIRDINITIAL_Y = 100;
     public static final int BIRDINITIAL_X = 100;
