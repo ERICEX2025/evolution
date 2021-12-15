@@ -60,14 +60,14 @@ public class SmartBird extends FlappyBird implements Game {
     }
 
     private void createNextGenBirds() {
-//        boolean passFirstPipe = false;
-//        for(BirdsThatLearn Bird: this.fitnessArray){
-//            if(Bird.getFitness()>290){
-//                passFirstPipe = true;
-//            }
-//
-//        }
-//       if(passFirstPipe) {
+        boolean passFirstPipe = false;
+        for(BirdsThatLearn Bird: this.fitnessArray){
+            if(Bird.getFitness()>290){
+                passFirstPipe = true;
+            }
+
+        }
+       if(passFirstPipe) {
            BirdsThatLearn birdToBePassed = this.fitnessArray.get(0);
            int index = 0;
            for (int i = 0; i < this.fitnessArray.size(); i++) {
@@ -124,10 +124,10 @@ public class SmartBird extends FlappyBird implements Game {
            }
            this.fitnessArray.remove(index3);
        }
-//       else{
-//           this.create50RandomBirds();
-//       }
-//    }
+       else{
+           this.create50RandomBirds();
+       }
+    }
 
 
     @Override
@@ -142,6 +142,7 @@ public class SmartBird extends FlappyBird implements Game {
 
         this.updateNeuralNetworkForBirds();
         this.collisionCheck();
+        this.addPointsIfNearPipeYPos();
         this.updateFitness();
 
     }
@@ -159,6 +160,15 @@ public class SmartBird extends FlappyBird implements Game {
 
     }
 
+    private void addPointsIfNearPipeYPos() {
+        if (this.birds.size() > 0) {
+            for (int i = 0; i < this.birds.size(); i++) {
+                if (Math.abs(this.getPipes().get(0).getGapHeight() - this.birds.get(i).getY()) < 40) {
+                        this.birds.get(i).addFitness();
+                }
+            }
+        }
+    }
 
     public void collisionCheck() {
         if (this.birds.size() > 0) {
@@ -166,11 +176,6 @@ public class SmartBird extends FlappyBird implements Game {
                 if (this.birds.get(i).checkIntersection(this.getPipes().get(0).getTopBounds()) ||
                         this.birds.get(i).checkIntersection(this.getPipes().get(0).getBotBounds()) ||
                         this.birds.get(i).getY() > Constants.GAMEPANE_HEIGHT) {
-                    if(Math.abs(this.getPipes().get(0).getGapHeight()-this.birds.get(i).getY()) < 400){
-                        for(int o = 0; o < 100; o++){
-                            this.birds.get(i).addFitness();
-                        }
-                    }
                     this.fitnessArray.add(this.birds.get(i));
                     this.birds.get(i).removeBird();
                     this.birds.remove(this.birds.get(i));
