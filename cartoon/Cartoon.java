@@ -1,10 +1,7 @@
 package evolution.cartoon;
 
-import evolution.Arcade.Game;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
+import evolution.arcade.Game;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,10 +13,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
+
 import java.util.ArrayList;
 
 /**
+ * IMPORTANT: BECAUSE OF ARCADE, RAIN IS NO LONGER USED.
+ *
  * high level logic class and does graphics that include logic
  * contains Turtle, Rain, and Lolipop
  */
@@ -68,6 +67,11 @@ public class Cartoon implements Game {
         this.bottomPane.getChildren().add(stepsLabel = new Label(" 0" + " steps"));
         this.stepsLabel.setFont(Font.font(20));
     }
+
+    /**
+     * sets up background
+     */
+
     private void setUpBackground(){
 
         Image image = new Image(this.getClass().getResourceAsStream("VioletScene.jpg"));
@@ -89,11 +93,19 @@ public class Cartoon implements Game {
         this.updateStepsLabel();
     }
 
+    /**
+     * sets duration of timeline
+     * @return
+     */
     @Override
     public double setDuration() {
         return 1;
     }
 
+    /**
+     * checks if it is gameOver
+     * @return
+     */
     @Override
     public boolean checkForGameOver() {
         if(this.me.getXPos() > Constants.LOLIPOP_X-30){
@@ -102,6 +114,9 @@ public class Cartoon implements Game {
         return false;
     }
 
+    /**
+     * restarts the game
+     */
     @Override
     public void restart() {
         this.middlePane.getChildren().clear();
@@ -133,6 +148,11 @@ public class Cartoon implements Game {
 
         e.consume();
     }
+
+    /**
+     * Sets the rate of the timeline
+     * @param timeline
+     */
 
     @Override
     public void setTimeline(Timeline timeline) {

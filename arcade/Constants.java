@@ -1,4 +1,9 @@
-package evolution.Arcade;
+package evolution.arcade;
+
+/**
+ * Arcade Constants
+ * Constants for Setting the Graphical elements of the Arcade Screen
+ */
 
 public class Constants {
     public static final double ARCADE_WIDTH = 400;

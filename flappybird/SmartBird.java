@@ -1,6 +1,6 @@
 package evolution.flappybird;
 
-import evolution.Arcade.Game;
+import evolution.arcade.Game;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -131,7 +131,6 @@ public class SmartBird extends FlappyBird implements Game {
 
         this.updateNeuralNetworkForBirds();
         this.collisionCheck();
-        this.addPointsIfNearPipeYPos();
 
     }
 
@@ -143,16 +142,6 @@ public class SmartBird extends FlappyBird implements Game {
             this.bestAllTimeFitnessLabel.setText("BestAllTimeFitness: " + this.bestAllTimeFitness);
         }
 
-    }
-
-    private void addPointsIfNearPipeYPos() {
-        if (this.birds.size() > 0) {
-            for (int i = 0; i < this.birds.size(); i++) {
-                if (Math.abs(this.getPipes().get(0).getGapHeight() - this.birds.get(i).getY()) < 40) {
-                    this.birds.get(i).addFitness();
-                }
-            }
-        }
     }
 
     public void collisionCheck() {
@@ -237,7 +226,7 @@ public class SmartBird extends FlappyBird implements Game {
     @Override
     public boolean checkForGameOver() {
 
-        if (this.currentFitnessCounter == 20000) {
+        if (this.currentFitnessCounter == 10000) {
             return true;
         }
 
@@ -290,7 +279,7 @@ public class SmartBird extends FlappyBird implements Game {
 
     }
 
-    private void createTimeLineButtons(){
+    private void createTimeLineButtons() {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         Button oneSpeed = new Button();

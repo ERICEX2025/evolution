@@ -1,6 +1,6 @@
 package evolution.flappybird;
 
-import evolution.Arcade.Game;
+import evolution.arcade.Game;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;

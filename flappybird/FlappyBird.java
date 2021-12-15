@@ -1,5 +1,10 @@
 package evolution.flappybird;
 
+/**
+ * the High Level Logic Class that deals with the pipes and setting up the Game
+ * It is the parent class and lets the specific games implement their game logic their own specfic ways
+ */
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;

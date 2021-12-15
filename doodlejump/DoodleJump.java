@@ -1,6 +1,6 @@
 package evolution.doodlejump;
 
-import evolution.Arcade.Game;
+import evolution.arcade.Game;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -49,7 +49,7 @@ public class DoodleJump implements Game {
         }
 
     /**
-     * sets timeline to one keyframe that constantly calls all the necessary methods that the game needs
+     * updates the game
      */
 
     @Override
@@ -63,11 +63,19 @@ public class DoodleJump implements Game {
         this.removePlatform();
     }
 
+    /**
+     * sets the Duration of the timeline
+     * @return
+     */
+
     @Override
     public double setDuration(){
         return Constants.DURATION;
     }
 
+    /**
+     * restarts the game
+     */
     @Override
     public void restart(){
         this.score = 0;
@@ -208,6 +216,9 @@ public class DoodleJump implements Game {
         }
     }
 
+    /**
+     * keyhandler
+     */
     @Override
     public void keyHandler (KeyEvent e){
         switch (e.getCode()){
@@ -232,11 +243,18 @@ public class DoodleJump implements Game {
         e.consume();
     }
 
+    /**
+     * not used/not applicable
+     * @param timeline
+     */
     @Override
     public void setTimeline(Timeline timeline) {
 
     }
 
+    /**
+     * sets up background pic
+     */
     private void setupBackgroundPic() {
         Image image = new Image(this.getClass().getResourceAsStream("violet.jpg"));
         ImageView iv = new ImageView(image);
