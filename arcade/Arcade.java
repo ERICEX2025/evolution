@@ -248,7 +248,7 @@ public class Arcade {
      * @param e
      */
 
-    public void keyHandler(KeyEvent e) {
+    private void keyHandler(KeyEvent e) {
         KeyCode keyPressed = e.getCode();
         if(!this.currentGame.checkForGameOver()) {
             if (keyPressed == P) {

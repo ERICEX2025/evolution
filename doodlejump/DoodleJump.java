@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
+ * IMPLEMENTS Game so the arcade can call generic arcade game
+ * methods without needing to know which game is being player
  * game handles the timeline and high level logic
  * contains doodle, Blue, Red, Black, Green, GameOver
  */

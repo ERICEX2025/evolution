@@ -1,1 +1,46 @@
-Make population extensible
+Evolution README
+
+Overview:
+We have Arcade which has an arcadePane, topPane for exit, back, and restart buttons, bottomPane for each individual
+games' scores, and gamePane which is for the games itself. The games are delegated to an enum so everything in arcade
+is generic and does not need to know a game's specifics. Adding along to that, once the enum tells the "currentGame"
+instance variable, it is of type interface and calls generic methods that are needed for every arcade game. It shares
+the same timeline, restart, gameOver and pause labels. When switching between games and arcade, we reset the center
+and bottom Pane to be set center and bottom on the root Pane and when it goes back to the arcade, remove the panes and
+set center the arcade pane. It features my doodleJump and cartoon along with the required regular flappybird,
+multiplayer flappybird, and smartflappybird. All the flappy bird games inherit from generic flappyBird and all the
+ARCADE games implement Game. Game is used for arcade to call generic arcade game methods.
+
+For my Cartoon specifically, I had to delete the rain function because of the required shared timeline. The rain
+requires multiple timelines with different keyframe durations. The game Over is when the turtle reaches the Lolipop
+The key functions are left and right.
+
+Design Choices:
+
+    For the Arcade design I used a shared timeline, enums to delegate the specific game stuff and an interface
+    for the arcade games. The arcade games will use the interface methods which are methods required for an
+    arcade game to function. The arcade does not need to know what the game is or their specifics.
+
+    For the flappybird games, I have a generic flappybird game which is the parent of the 3 different flappybird games.
+    They all reuse code that deal with Pipes and its setup and also 2 of the game modes use the same score functionality
+    so I chose to use inheritance; Because the flappybird games all have their specific integration of the birds and
+    the same foundation and setup of a flappy bird game. For their differences, all I need to do is instantiate
+    the birds differently and override some methods that may be different. I chose it over an interface because there
+    would be too many inapplicable methods to implement for regular and multiplayer since smartBird is so much different
+    than the others. Inheritance was also a lot more intuitive for me and looks a lot cleaner.
+
+    For the birds class. It is used for regular and multiplayer birds. For smartBird, the BirdsThatLearn inherit from
+    the birds class so I use inheritance since again, it has the same foundation of the bird, just needs some add ons
+    on top of it, aka adding fitness and the neural network to be associated with each of the BirdsThatLearn.
+
+    Note: Thank you guys for a fun semester and dealing with our complaints and frustrations! Have a good winter break
+    :D
+
+Known Bugs:
+none
+
+Debugging Collaborators (only for Cartoon, DoodleJump, Tetris, FPs):
+none
+
+Hours Spent: This project took me approximately a lot of hours to complete.
+

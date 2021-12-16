@@ -19,6 +19,8 @@ import java.util.ArrayList;
 /**
  * IMPORTANT: BECAUSE OF ARCADE, RAIN IS NO LONGER USED.
  *
+ * IMPLEMENTS Game so the arcade can call generic arcade game
+ * methods without needing to know which game is being player
  * high level logic class and does graphics that include logic
  * contains Turtle, Rain, and Lolipop
  */

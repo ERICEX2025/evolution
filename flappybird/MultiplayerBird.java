@@ -1,5 +1,11 @@
 package evolution.flappybird;
 
+/**
+ * this is the multiplayer version of the flappybird game. inherits from flappybird to use its Pipe generation,
+ * removal, and move methods. Also uses flappybird's score methods. IMPLEMENTS Game so arcade can use this game
+ * generically without having to know its specifics
+ */
+
 import evolution.arcade.Game;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
@@ -15,6 +21,12 @@ public class MultiplayerBird extends FlappyBird implements Game {
     private boolean dead2;
     private Pane gamePane;
 
+    /**
+     * because it has 2 birds and but is the same game, it inherits the basics of the game and implements it
+     * differently using 2 birds and overrides when necessary to take into account the 2 birds
+     * @param gamePane
+     * @param bottomPane
+     */
     public MultiplayerBird(Pane gamePane, VBox bottomPane){
         super(gamePane, bottomPane);
         this.gamePane = gamePane;
@@ -25,13 +37,21 @@ public class MultiplayerBird extends FlappyBird implements Game {
 
     }
 
-    public void setUpBirds(){
+    /**
+     * helper method to set up birds, setting opacity to help its looks 0.0
+     */
+
+    private void setUpBirds(){
         this.bird1 = new Bird(gamePane);
         this.bird1.setOpacity();
         this.bird2 = new Bird(gamePane);
         this.bird2.setOpacity();
         this.bird2.setColor(Color.PURPLE);
     }
+
+    /**
+     * called every iteration of the timeline, used by arcade generically
+     */
 
     @Override
     public void updateGame(){
@@ -48,11 +68,21 @@ public class MultiplayerBird extends FlappyBird implements Game {
         this.removePipes();
     }
 
+    /**
+     * returns the duration for the timeline's keyframe in arcade
+     * @return
+     */
+
     @Override
     public double setDuration(){
         return Constants.DURATION;
 
     }
+
+    /**
+     * called every iteration to see if its game Over
+     * @return
+     */
 
     @Override
     public boolean checkForGameOver(){
@@ -61,6 +91,11 @@ public class MultiplayerBird extends FlappyBird implements Game {
         }
         return false;
     }
+
+    /**
+     * used to reset the Pane, score, Pipes, and generate new birds
+     *
+     */
 
     @Override
     public void restart(){
@@ -73,7 +108,13 @@ public class MultiplayerBird extends FlappyBird implements Game {
 
     }
 
-    public void isDead(){
+    /**
+     * checks if the birds are dead if they collide with pipe or fall down the screen. removes the birds
+     * grafically and logically if it does die while also setting the booleans to true so gameOver will know
+     * and put a game Over label on screen
+     */
+
+    private void isDead(){
         if(dead1 == false) {
             if (this.bird1.checkIntersection(this.getPipes().get(0).getTopBounds()) ||
                     this.bird1.checkIntersection(this.getPipes().get(0).getBotBounds()) ||
@@ -94,7 +135,11 @@ public class MultiplayerBird extends FlappyBird implements Game {
         }
     }
 
-    public void checkForBirdPassingPipe(){
+    /**
+     * checks if the bird passes the Pipe, if its not dead. Adds score if it does pass a pipe
+     */
+
+    private void checkForBirdPassingPipe(){
         if(dead1 == false) {
             if (this.bird1.getX() == this.getPipes().get(0).getPosX() + Constants.PIPE_WIDTH) {
                 this.addScore();
@@ -107,6 +152,10 @@ public class MultiplayerBird extends FlappyBird implements Game {
         }
     }
 
+    /**
+     * keyhandler that uses up and space to make the birds jump
+     * @param e
+     */
     @Override
     public void keyHandler (KeyEvent e){
         switch (e.getCode()){
@@ -126,6 +175,9 @@ public class MultiplayerBird extends FlappyBird implements Game {
         e.consume();
     }
 
+    /**
+     * not used but necessary to include because it implements game and is needed for smartBird Game
+     */
     @Override
     public void setTimeline(Timeline timeline) {
 
